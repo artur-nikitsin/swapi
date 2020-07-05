@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swapi</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+<div class="container">
+
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-root-tab" data-toggle="tab" href="#nav-root" role="tab"
+               aria-controls="nav-home" aria-selected="true">Main</a>
+            <a class="nav-item nav-link" id="nav-people-tab" data-toggle="tab" href="#nav-people" role="tab"
+               aria-controls="nav-profile" aria-selected="false">People</a>
+            <a class="nav-item nav-link" id="nav-films-tab" data-toggle="tab" href="#nav-films" role="tab"
+               aria-controls="nav-contact" aria-selected="false">Films</a>
+
+            <a class="nav-item nav-link" id="nav-starships-tab" data-toggle="tab" href="#nav-starships" role="tab"
+               aria-controls="nav-home" aria-selected="true">Starships</a>
+            <a class="nav-item nav-link" id="nav-vehicles-tab" data-toggle="tab" href="#nav-vehicles" role="tab"
+               aria-controls="nav-profile" aria-selected="false">Vehicles</a>
+            <a class="nav-item nav-link" id="nav-species-tab" data-toggle="tab" href="#nav-species" role="tab"
+               aria-controls="nav-contact" aria-selected="false">Species</a>
+            <a class="nav-item nav-link" id="nav-planets-tab" data-toggle="tab" href="#nav-planets" role="tab"
+               aria-controls="nav-contact" aria-selected="false">Planets</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-root" role="tabpanel" aria-labelledby="nav-root-tab">Main</div>
+        <div class="tab-pane fade" id="nav-people" role="tabpanel" aria-labelledby="nav-people-tab">People</div>
+        <div class="tab-pane fade" id="nav-films" role="tabpanel" aria-labelledby="nav-films-tab">Films</div>
+        <div class="tab-pane fade" id="nav-starships" role="tabpanel" aria-labelledby="nav-starships-tab">Starships
+        </div>
+        <div class="tab-pane fade" id="nav-vehicles" role="tabpanel" aria-labelledby="nav-vehicles-tab">Vehicles</div>
+
+        <div class="tab-pane fade" id="nav-species" role="tabpanel" aria-labelledby="nav-species-tab">Species</div>
+        <div class="tab-pane fade" id="nav-planets" role="tabpanel" aria-labelledby="nav-planets-tab">Planets</div>
+    </div>
+</div>
+<!-- <button type="button" class="btn btn-outline-dark root">Root</button>
+ <button type="button" class="btn btn-outline-dark people">People</button>
+ <button type="button" class="btn btn-outline-dark films">Films</button>
+ <button type="button" class="btn btn-outline-dark starships">Starships</button>
+ <button type="button" class="btn btn-outline-dark vehicles">Vehicles</button>
+ <button type="button" class="btn btn-outline-dark vehicles">Species</button>
+ <button type="button" class="btn btn-outline-dark planets">Planets</button>-->
+</div>
+</body>
+</html>
