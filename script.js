@@ -8,27 +8,6 @@ window.onload = function () {
     document.querySelector("#nav-species-tab").addEventListener("click", getPeople, false)
     document.querySelector("#nav-planets-tab").addEventListener("click", getPeople, false)
 
-   /* let url = '';
-    let tab = null;
-
-    function getData(param) {
-
-        let currentTab = this.id;
-        console.log(this.id);
-
-        switch (currentTab) {
-            case "nav-films-tab":
-                tab = "films"
-                getPeople();
-                break
-            case "nav-people-tab":
-                tab = "people"
-                break
-        }
-
-    }*/
-
-
     function getPeople() {
         fetch("https://swapi.dev/api/people")
             .then(response =>
