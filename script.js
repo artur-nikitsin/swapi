@@ -1,6 +1,6 @@
 window.onload = function () {
 
-    document.querySelector("#nav-root-tab").addEventListener("click", getPeople, false)
+
     document.querySelector("#nav-people-tab").addEventListener("click", getPeople, false)
     document.querySelector("#nav-films-tab").addEventListener("click", getFilms, false)
     document.querySelector("#nav-starships-tab").addEventListener("click", getStarShips, false)
@@ -9,8 +9,9 @@ window.onload = function () {
     document.querySelector("#nav-planets-tab").addEventListener("click", getPlanets, false)
 
 
-    function addShowMoreButton() {
+    getPeople();
 
+    function addShowMoreButton() {
 
         let collapseButtons = document.querySelectorAll(".showMoreLessButton");
 
@@ -31,7 +32,28 @@ window.onload = function () {
     };
 
 
+    function addPreloader(currentTabId) {
+
+        if (currentTabId) {
+
+            let currentTab = document.querySelector(currentTabId);
+
+            let preloader = `<div class="spinner-border text-success" role="status">
+                             <span class="sr-only">Loading...</span>
+                             </div>`;
+
+            currentTab.innerHTML = preloader;
+
+        }
+    };
+
+    addPreloader();
+
+
     function getPeople() {
+
+        addPreloader("#nav-people");
+
         fetch("https://swapi.dev/api/people")
             .then(response =>
                 response.json())
@@ -43,8 +65,8 @@ window.onload = function () {
 
 
                     return (
-                        `<div class="card bg-light border-dark mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-transparent border-dark">
+                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                            <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
                             
@@ -65,7 +87,7 @@ window.onload = function () {
                             </div>
                              
                              
-                            <div class="card-footer bg-transparent border-dark">
+                            <div class="card-footer bg-transparent border-success">
                                 <a class=" btn btn-link showMoreLessButton" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
@@ -85,6 +107,9 @@ window.onload = function () {
 
 
     function getFilms() {
+
+        addPreloader("#nav-films");
+
         fetch("https://swapi.dev/api/films")
             .then(response =>
                 response.json())
@@ -96,8 +121,8 @@ window.onload = function () {
 
 
                     return (
-                        `<div class="card bg-light border-dark mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-transparent border-dark">
+                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                            <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.title}</h5>
                             </div>
                             
@@ -116,7 +141,7 @@ window.onload = function () {
                                 </div>
                             </div>
                              
-                            <div class="card-footer bg-transparent border-dark">
+                            <div class="card-footer bg-transparent border-success">
                                 <a class=" btn btn-link showMoreLessButton" data-toggle="collapse" 
                                 href="${"#" + item.title.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
@@ -136,6 +161,9 @@ window.onload = function () {
 
 
     function getStarShips() {
+
+        addPreloader("#nav-starships");
+
         fetch("https://swapi.dev/api/starships")
             .then(response =>
                 response.json())
@@ -147,8 +175,8 @@ window.onload = function () {
 
 
                     return (
-                        `<div class="card bg-light border-dark mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-transparent border-dark">
+                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                            <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
                             
@@ -174,7 +202,7 @@ window.onload = function () {
                                 </div>
                             </div>
                              
-                            <div class="card-footer bg-transparent border-dark">
+                            <div class="card-footer bg-transparent border-success">
                                 <a class=" btn btn-link showMoreLessButton" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
@@ -194,6 +222,9 @@ window.onload = function () {
 
 
     function getVehicles() {
+
+        addPreloader("#nav-vehicles");
+
         fetch("https://swapi.dev/api/vehicles")
             .then(response =>
                 response.json())
@@ -205,8 +236,8 @@ window.onload = function () {
 
 
                     return (
-                        `<div class="card bg-light border-dark mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-transparent border-dark">
+                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                            <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
                             
@@ -229,7 +260,7 @@ window.onload = function () {
                                 </div>
                             </div>
                              
-                            <div class="card-footer bg-transparent border-dark">
+                            <div class="card-footer bg-transparent border-success">
                                 <a class=" btn btn-link showMoreLessButton" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
@@ -248,6 +279,9 @@ window.onload = function () {
     }
 
     function getSpecies() {
+
+        addPreloader("#nav-species");
+
         fetch("https://swapi.dev/api/species")
             .then(response =>
                 response.json())
@@ -259,8 +293,8 @@ window.onload = function () {
 
 
                     return (
-                        `<div class="card bg-light border-dark mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-transparent border-dark">
+                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                            <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
                             
@@ -283,7 +317,7 @@ window.onload = function () {
                                 </div>
                             </div>
                              
-                            <div class="card-footer bg-transparent border-dark">
+                            <div class="card-footer bg-transparent border-success">
                                 <a class=" btn btn-link showMoreLessButton" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
@@ -302,6 +336,9 @@ window.onload = function () {
     }
 
     function getPlanets() {
+
+        addPreloader("#nav-planets");
+
         fetch("https://swapi.dev/api/planets")
             .then(response =>
                 response.json())
@@ -313,8 +350,8 @@ window.onload = function () {
 
 
                     return (
-                        `<div class="card bg-light border-dark mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-transparent border-dark">
+                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                            <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
                             
@@ -337,7 +374,7 @@ window.onload = function () {
                                 </div>
                             </div>
                              
-                            <div class="card-footer bg-transparent border-dark">
+                            <div class="card-footer bg-transparent border-success">
                                 <a class=" btn btn-link showMoreLessButton" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>

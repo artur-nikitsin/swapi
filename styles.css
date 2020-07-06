@@ -1,20 +1,37 @@
+.appHeader {
+    margin-bottom: 40px;
+}
+
 .container {
+    min-height: 98vh;
     padding-top: 20px;
-    border: 1px solid black;
+    padding-bottom: 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 
 #nav-tabContent .active {
     display: flex !important;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: flex-start !important;
+    justify-content: space-between;
+    align-items: center !important;
     flex-wrap: wrap;
-    padding-top: 20px;
+    padding-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 
 .card {
     min-width: 300px !important;
+    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);*/
+}
+
+.card:hover {
+    min-width: 300px !important;
+    box-shadow: 0 0 10px rgba(89, 128, 49, 0.5);
+
 }
 
 .card-body > p {
@@ -26,7 +43,20 @@
     color: black !important;
 }
 
-.nav-link:active {
-    color: red !important;
+.nav-tabs > .active {
+    color: green !important;
+    font-weight: bold;
     background: black;
+}
+
+.showMoreLessButton {
+    box-shadow: none!important;
+    outline: none!important;
+}
+
+.btn-link:hover:focus,
+.btn-link:hover:active,
+.btn-link:hover:visited {
+    box-shadow: none!important;
+    outline: none!important;
 }
