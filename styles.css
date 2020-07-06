@@ -25,13 +25,13 @@
 
 .card {
     min-width: 300px !important;
-    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);*/
+    min-height: 320px !important;
 }
 
 .card:hover {
     min-width: 300px !important;
     box-shadow: 0 0 10px rgba(89, 128, 49, 0.5);
-
+    transition: box-shadow  .1s linear;
 }
 
 .card-body > p {
