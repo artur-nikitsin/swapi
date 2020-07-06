@@ -1,16 +1,26 @@
 .container {
+    padding-top: 20px;
     border: 1px solid black;
-    min-height: 100%;
 }
 
 
-.tab-pane {
-    display: flex!important;
-    flex-direction: row ;
+#nav-tabContent .active {
+    display: flex !important;
+    flex-direction: row;
     justify-content: space-around;
-    align-items: self-end !important;
+    align-items: flex-start !important;
     flex-wrap: wrap;
+    padding-top: 20px;
 }
+
+.card {
+    min-width: 300px !important;
+}
+
+.card-body > p {
+    margin-bottom: 5px !important;
+}
+
 
 .nav-link {
     color: black !important;
