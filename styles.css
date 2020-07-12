@@ -13,10 +13,10 @@
 
 
 #nav-tabContent .active {
-    display: flex !important;
+    display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center !important;
+    justify-content: space-around;
+    align-items: center;
     flex-wrap: wrap;
     padding-top: 40px;
     padding-left: 40px;
@@ -24,23 +24,23 @@
 }
 
 .card {
-    min-width: 300px !important;
-    min-height: 320px !important;
+    min-width: 300px;
+    min-height: 320px;
 }
 
 .card:hover {
-    min-width: 300px !important;
+    min-width: 300px;
     box-shadow: 0 0 10px rgba(89, 128, 49, 0.5);
     transition: box-shadow  .1s linear;
 }
 
 .card-body > p {
-    margin-bottom: 5px !important;
+    margin-bottom: 5px;
 }
 
 
 .nav-link {
-    color: black !important;
+    color: black;
 }
 
 .nav-tabs > .active {

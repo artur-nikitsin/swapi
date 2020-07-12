@@ -50,39 +50,65 @@ window.onload = function () {
     addPreloader();
 
 
+    function addPaginator(response) {
+
+        console.log(response.count);
+
+
+        let pages = null
+
+
+        let paginator = ` <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>`;
+
+    };
+
     function getPeople() {
 
         addPreloader("#nav-people");
 
-        fetch("https://swapi.dev/api/people")
-            .then(response =>
-                response.json())
 
-            .then(people => {
+        function fetchGet(url) {
 
-
-                let renderPeople = people.results.map(function (item, i) {
+            let currentUrl = url ? url : "https://swapi.dev/api/people";
 
 
-                    return (
-                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+            fetch(currentUrl)
+                .then(response =>
+                    response.json())
+
+                .then(people => {
+
+                    addPaginator(people);
+
+                    let renderPeople = people.results.map(function (item, i) {
+
+                        return (
+                            `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
                             
                           <div class="card-body text-dark">       
-                                 <p class="card-text"><b>birth year:</b> ${item.birth_year}</p>         
-                                 <p class="card-text"><b>gender:</b> ${item.gender}</p> 
-                                 <p class="card-text"><b>height:</b> ${item.height}</p>
-                                 <p class=""><b>mass:</b> ${item.mass}</p>
+                                 <p class="card-text"><b>Birth year:</b> ${item.birth_year}</p>         
+                                 <p class="card-text"><b>Gender:</b> ${item.gender}</p> 
+                                 <p class="card-text"><b>Height:</b> ${item.height}</p>
+                                 <p class=""><b>Mass:</b> ${item.mass}</p>
                                                      
                             </div>
                              
                             <div class="collapse" id="${item.name.split(" ").join("")}">
                                     <div class="card-body text-dark">
-                                        <p class="card-text"><b>eye color:</b> ${item.eye_color}</p>
-                                        <p class="card-text"><b>hair color:</b> ${item.hair_color}</p>           
-                                        <p class="card-text"><b>skin color:</b> ${item.skin_color}</p>
+                                        <p class="card-text"><b>Eye color:</b> ${item.eye_color}</p>
+                                        <p class="card-text"><b>Hair color:</b> ${item.hair_color}</p>           
+                                        <p class="card-text"><b>Skin color:</b> ${item.skin_color}</p>
                                     </div>
                             </div>
                              
@@ -95,14 +121,17 @@ window.onload = function () {
                              
                          </div>`)
 
-                });
-                return renderPeople;
-            })
+                    });
+                    return renderPeople;
+                })
 
-            .then(renderPeople => {
-                document.querySelector("#nav-people").innerHTML = renderPeople.join("");
-                addShowMoreButton();
-            })
+                .then(renderPeople => {
+                    document.querySelector("#nav-people").innerHTML = renderPeople.join("");
+                    addShowMoreButton();
+                })
+        };
+
+        fetchGet();
     }
 
 
@@ -128,16 +157,16 @@ window.onload = function () {
                             
                            
                              <div class="card-body text-dark">
-                                <p class=""><b>release date:</b> ${item.release_date}</p>
-                                <p class="card-text"><b>episode:</b> ${item.episode_id}</p>         
-                                <p class="card-text"><b>director:</b> ${item.director}</p> 
-                                <p class="card-text"><b>producer:</b> ${item.producer}</p>              
+                                <p class=""><b>Release date:</b> ${item.release_date}</p>
+                                <p class="card-text"><b>Episode:</b> ${item.episode_id}</p>         
+                                <p class="card-text"><b>Director:</b> ${item.director}</p> 
+                                <p class="card-text"><b>Producer:</b> ${item.producer}</p>              
                             </div>
                             
                             
                             <div class="collapse" id="${item.title.split(" ").join("")}">
                                 <div class="card-body">
-                                    <p class="card-text"><b>opening crawl</b>: ${item.opening_crawl}</p>
+                                    <p class="card-text"><b>Opening crawl</b>: ${item.opening_crawl}</p>
                                 </div>
                             </div>
                              
@@ -182,23 +211,23 @@ window.onload = function () {
                             
                            
                              <div class="card-body text-dark">
-                                <p class=""><b>model:</b> ${item.model}</p>
-                                <p class="card-text"><b>manufacturer:</b> ${item.manufacturer}</p>         
-                                <p class="card-text"><b>cost in credits:</b> ${item.cost_in_credits}</p> 
-                                <p class="card-text"><b>max atmosphering speed:</b> ${item.max_atmosphering_speed}</p>              
+                                <p class=""><b>Model:</b> ${item.model}</p>
+                                <p class="card-text"><b>Manufacturer:</b> ${item.manufacturer}</p>         
+                                <p class="card-text"><b>Cost in credits:</b> ${item.cost_in_credits}</p> 
+                                <p class="card-text"><b>Max atmosphering speed:</b> ${item.max_atmosphering_speed}</p>              
                             </div>
                             
                             
                             <div class="collapse" id="${item.name.split(" ").join("")}">
                                 <div class="card-body">
-                                    <p class="card-text"><b>length:</b> ${item.length}</p>
-                                    <p class="card-text"><b>crew:</b> ${item.crew}</p>
-                                    <p class="card-text"><b>passengers:</b> ${item.passengers}</p>
-                                    <p class="card-text"><b>cargo_capacity:</b> ${item.cargo_capacity}</p>
-                                    <p class="card-text"><b>oconsumables:</b> ${item.consumables}</p>
-                                    <p class="card-text"><b>hyperdrive rating:</b> ${item.hyperdrive_rating}</p>
+                                    <p class="card-text"><b>Length:</b> ${item.length}</p>
+                                    <p class="card-text"><b>Crew:</b> ${item.crew}</p>
+                                    <p class="card-text"><b>Passengers:</b> ${item.passengers}</p>
+                                    <p class="card-text"><b>Cargo capacity:</b> ${item.cargo_capacity}</p>
+                                    <p class="card-text"><b>Oconsumables:</b> ${item.consumables}</p>
+                                    <p class="card-text"><b>Hyperdrive rating:</b> ${item.hyperdrive_rating}</p>
                                     <p class="card-text"><b>MGLT:</b> ${item.MGLT}</p>
-                                    <p class="card-text"><b>starship class:</b> ${item.starship_class}</p>
+                                    <p class="card-text"><b>Starship class:</b> ${item.starship_class}</p>
                                 </div>
                             </div>
                              
@@ -243,20 +272,20 @@ window.onload = function () {
                             
                            
                              <div class="card-body text-dark">
-                                <p class=""><b>model:</b> ${item.model}</p>
-                                <p class="card-text"><b>manufacturer:</b> ${item.manufacturer}</p>         
-                                <p class="card-text"><b>cost in credits:</b> ${item.cost_in_credits}</p> 
-                                <p class="card-text"><b>max atmosphering speed:</b> ${item.max_atmosphering_speed}</p>              
+                                <p class=""><b>Model:</b> ${item.model}</p>
+                                <p class="card-text"><b>Manufacturer:</b> ${item.manufacturer}</p>         
+                                <p class="card-text"><b>Cost in credits:</b> ${item.cost_in_credits}</p> 
+                                <p class="card-text"><b>Max atmosphering speed:</b> ${item.max_atmosphering_speed}</p>              
                             </div>
                             
                             
                             <div class="collapse" id="${item.name.split(" ").join("")}">
                                 <div class="card-body">
-                                    <p class="card-text"><b>length:</b> ${item.length}</p>
-                                    <p class="card-text"><b>crew:</b> ${item.crew}</p>
-                                    <p class="card-text"><b>passengers:</b> ${item.passengers}</p>
-                                    <p class="card-text"><b>cargo_capacity:</b> ${item.cargo_capacity}</p>
-                                    <p class="card-text"><b>oconsumables:</b> ${item.consumables}</p>
+                                    <p class="card-text"><b>Length:</b> ${item.length}</p>
+                                    <p class="card-text"><b>Crew:</b> ${item.crew}</p>
+                                    <p class="card-text"><b>Passengers:</b> ${item.passengers}</p>
+                                    <p class="card-text"><b>Cargo capacity:</b> ${item.cargo_capacity}</p>
+                                    <p class="card-text"><b>Oconsumables:</b> ${item.consumables}</p>
                                 </div>
                             </div>
                              
@@ -300,19 +329,19 @@ window.onload = function () {
                             
                            
                              <div class="card-body text-dark">
-                                <p class=""><b>classification:</b> ${item.classification}</p>
-                                <p class="card-text"><b>designation:</b> ${item.designation}</p>         
-                                <p class="card-text"><b>language:</b> ${item.language}</p> 
-                                <p class="card-text"><b>average lifespan:</b> ${item.average_lifespan}</p>              
+                                <p class=""><b>Classification:</b> ${item.classification}</p>
+                                <p class="card-text"><b>Designation:</b> ${item.designation}</p>         
+                                <p class="card-text"><b>Language:</b> ${item.language}</p> 
+                                <p class="card-text"><b>Average lifespan:</b> ${item.average_lifespan}</p>              
                             </div>
                             
                             
                             <div class="collapse" id="${item.name.split(" ").join("")}">
                                 <div class="card-body">
-                                    <p class="card-text"><b>average height:</b> ${item.average_height}</p>
-                                    <p class="card-text"><b>skin colors:</b> ${item.skin_colors}</p>
-                                    <p class="card-text"><b>hair colors:</b> ${item.hair_colors}</p>
-                                    <p class="card-text"><b>eye colors:</b> ${item.eye_colors}</p>
+                                    <p class="card-text"><b>Average height:</b> ${item.average_height}</p>
+                                    <p class="card-text"><b>Skin colors:</b> ${item.skin_colors}</p>
+                                    <p class="card-text"><b>Hair colors:</b> ${item.hair_colors}</p>
+                                    <p class="card-text"><b>Eye colors:</b> ${item.eye_colors}</p>
                                    
                                 </div>
                             </div>
@@ -357,19 +386,19 @@ window.onload = function () {
                             
                            
                              <div class="card-body text-dark">
-                                <p class=""><b>rotation period:</b> ${item.rotation_period}</p>
-                                <p class="card-text"><b>orbital period:</b> ${item.orbital_period}</p>         
-                                <p class="card-text"><b>diameter:</b> ${item.diameter}</p> 
-                                <p class="card-text"><b>climate:</b> ${item.climate}</p>              
+                                <p class=""><b>Rotation period:</b> ${item.rotation_period}</p>
+                                <p class="card-text"><b>Orbital period:</b> ${item.orbital_period}</p>         
+                                <p class="card-text"><b>Diameter:</b> ${item.diameter}</p> 
+                                <p class="card-text"><b>Climate:</b> ${item.climate}</p>              
                             </div>
                             
                             
                             <div class="collapse" id="${item.name.split(" ").join("")}">
                                 <div class="card-body">
-                                    <p class="card-text"><b>gravity:</b> ${item.gravity}</p>
-                                    <p class="card-text"><b>terrain:</b> ${item.terrain}</p>
-                                    <p class="card-text"><b>surface water:</b> ${item.surface_water}</p>
-                                    <p class="card-text"><b>population:</b> ${item.population}</p>
+                                    <p class="card-text"><b>Gravity:</b> ${item.gravity}</p>
+                                    <p class="card-text"><b>Terrain:</b> ${item.terrain}</p>
+                                    <p class="card-text"><b>Surface water:</b> ${item.surface_water}</p>
+                                    <p class="card-text"><b>Population:</b> ${item.population}</p>
                                    
                                 </div>
                             </div>
