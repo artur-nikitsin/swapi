@@ -50,48 +50,95 @@ window.onload = function () {
     addPreloader();
 
 
-    function addPaginator(response) {
+    function addPaginator(response, tab) {
 
         console.log(response.count);
 
+        if (response.count > 10) {
 
-        let pages = null
-
-
-        let paginator = ` <nav aria-label="Page navigation example">
+            let paginator = ` <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item ${response.previous ? "" : "disabled"}"><a class="page-link" href="${response.previous}" data-tab="${tab}">Previous</a></li>
+                <!--<li class="page-item"><a class="page-link" href="#">1</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+                <li class="page-item ${response.next ? "" : "disabled"}"><a class="page-link" href="${response.next}" data-tab="${tab}">Next</a></li>
             </ul>
         </nav>`;
 
+            document.querySelector(".pagination").innerHTML = paginator;
+
+            let pages = document.querySelectorAll(".page-link");
+
+            [].forEach.call(pages, function (page) {
+                page.addEventListener("click", moveToAnotherPage, false);
+            });
+
+        } else {
+            document.querySelector(".pagination").innerHTML = "";
+        }
     };
+
+
+    function moveToAnotherPage(e) {
+        e.preventDefault();
+        let _this = this;
+        let nextPage = _this.getAttribute("href");
+
+        if (nextPage !== "null") {
+
+
+            let currentTab = _this.getAttribute("data-tab")
+
+            console.log(nextPage);
+            switch (currentTab) {
+                case "people":
+                    fetchGetPeople(nextPage);
+                    break;
+                case "films":
+                    fetchGetFilms(nextPage);
+                    break;
+                case "starships":
+                    fetchStarShips(nextPage);
+                    break;
+                case "vehicles":
+                    fetchVehicles(nextPage);
+                    break;
+                case "species":
+                    fetchSpecies(nextPage);
+                    break;
+                case "planets":
+                    fetchPlanets(nextPage);
+                    break;
+            }
+        }
+    }
+
 
     function getPeople() {
 
         addPreloader("#nav-people");
 
-
-        function fetchGet(url) {
-
-            let currentUrl = url ? url : "https://swapi.dev/api/people";
+        fetchGetPeople();
+    };
 
 
-            fetch(currentUrl)
-                .then(response =>
-                    response.json())
+    function fetchGetPeople(url) {
 
-                .then(people => {
+        let currentUrl = url ? url : "https://swapi.dev/api/people";
 
-                    addPaginator(people);
+        fetch(currentUrl)
+            .then(response =>
+                response.json())
 
-                    let renderPeople = people.results.map(function (item, i) {
+            .then(people => {
 
-                        return (
-                            `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                addPaginator(people, "people");
+
+                let renderPeople = people.results.map(function (item, i) {
+
+                    return (
+                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
@@ -121,30 +168,36 @@ window.onload = function () {
                              
                          </div>`)
 
-                    });
-                    return renderPeople;
-                })
+                });
+                return renderPeople;
+            })
 
-                .then(renderPeople => {
-                    document.querySelector("#nav-people").innerHTML = renderPeople.join("");
-                    addShowMoreButton();
-                })
-        };
-
-        fetchGet();
-    }
+            .then(renderPeople => {
+                document.querySelector("#nav-people").innerHTML = renderPeople.join("");
+                addShowMoreButton();
+            })
+    };
 
 
     function getFilms() {
 
         addPreloader("#nav-films");
 
-        fetch("https://swapi.dev/api/films")
+        fetchGetFilms();
+    }
+
+
+    function fetchGetFilms(url) {
+
+        let currentUrl = url ? url : "https://swapi.dev/api/films";
+
+        fetch(currentUrl)
             .then(response =>
                 response.json())
 
             .then(films => {
 
+                addPaginator(films, "films");
 
                 let renderFilms = films.results.map(function (item, i) {
 
@@ -193,12 +246,20 @@ window.onload = function () {
 
         addPreloader("#nav-starships");
 
-        fetch("https://swapi.dev/api/starships")
+        fetchStarShips();
+    }
+
+    function fetchStarShips(url) {
+
+        let currentUrl = url ? url : "https://swapi.dev/api/starships";
+
+        fetch(currentUrl)
             .then(response =>
                 response.json())
 
             .then(starships => {
 
+                addPaginator(starships, "starships");
 
                 let renderStarships = starships.results.map(function (item, i) {
 
@@ -254,13 +315,21 @@ window.onload = function () {
 
         addPreloader("#nav-vehicles");
 
-        fetch("https://swapi.dev/api/vehicles")
+        fetchVehicles();
+    }
+
+
+    function fetchVehicles(url) {
+
+        let currentUrl = url ? url : "https://swapi.dev/api/vehicles";
+
+        fetch(currentUrl)
             .then(response =>
                 response.json())
 
             .then(vehicles => {
 
-
+                addPaginator(vehicles, "vehicles");
                 let renderVehicles = vehicles.results.map(function (item, i) {
 
 
@@ -307,17 +376,26 @@ window.onload = function () {
             })
     }
 
+
     function getSpecies() {
 
         addPreloader("#nav-species");
 
-        fetch("https://swapi.dev/api/species")
+        fetchSpecies();
+    }
+
+
+    function fetchSpecies(url) {
+
+        let currentUrl = url ? url : "https://swapi.dev/api/species";
+
+        fetch(currentUrl)
             .then(response =>
                 response.json())
 
             .then(species => {
 
-
+                addPaginator(species, "species");
                 let renderSpecies = species.results.map(function (item, i) {
 
 
@@ -364,16 +442,25 @@ window.onload = function () {
             })
     }
 
+
     function getPlanets() {
 
         addPreloader("#nav-planets");
 
-        fetch("https://swapi.dev/api/planets")
+        fetchPlanets();
+    }
+
+
+    function fetchPlanets(url) {
+
+        let currentUrl = url ? url : "https://swapi.dev/api/planets";
+
+        fetch(currentUrl)
             .then(response =>
                 response.json())
 
             .then(planets => {
-
+                addPaginator(planets, "planets");
 
                 let renderPlanets = planets.results.map(function (item, i) {
 
