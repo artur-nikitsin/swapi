@@ -11,7 +11,6 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-
 #nav-tabContent .active {
     display: flex;
     flex-direction: row;
@@ -31,32 +30,37 @@
 .card:hover {
     min-width: 300px;
     box-shadow: 0 0 10px rgba(89, 128, 49, 0.5);
-    transition: box-shadow  .1s linear;
+    transition: box-shadow .1s linear;
 }
 
 .card-body > p {
     margin-bottom: 5px;
 }
 
-
 .nav-link {
     color: black;
 }
 
 .nav-tabs > .active {
-    color: green !important;
+    color: green;
     font-weight: bold;
     background: black;
 }
 
 .showMoreLessButton {
-    box-shadow: none!important;
-    outline: none!important;
+    box-shadow: none;
+    outline: none;
 }
 
 .btn-link:hover:focus,
 .btn-link:hover:active,
 .btn-link:hover:visited {
-    box-shadow: none!important;
-    outline: none!important;
+    box-shadow: none;
+    outline: none;
+}
+
+.pagination-bar {
+    height: 60px;
+    padding-top: 30px;
+    padding-left: 60px;
 }

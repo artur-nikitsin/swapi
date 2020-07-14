@@ -52,21 +52,16 @@ window.onload = function () {
 
     function addPaginator(response, tab) {
 
-        console.log(response.count);
-
         if (response.count > 10) {
 
             let paginator = ` <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item ${response.previous ? "" : "disabled"}"><a class="page-link" href="${response.previous}" data-tab="${tab}">Previous</a></li>
-                <!--<li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
                 <li class="page-item ${response.next ? "" : "disabled"}"><a class="page-link" href="${response.next}" data-tab="${tab}">Next</a></li>
             </ul>
         </nav>`;
 
-            document.querySelector(".pagination").innerHTML = paginator;
+            document.querySelector(".pagination-bar").innerHTML = paginator;
 
             let pages = document.querySelectorAll(".page-link");
 
@@ -87,39 +82,115 @@ window.onload = function () {
 
         if (nextPage !== "null") {
 
-
             let currentTab = _this.getAttribute("data-tab")
 
-            console.log(nextPage);
             switch (currentTab) {
                 case "people":
-                    fetchGetPeople(nextPage);
+
+                    if (checkLocalStorage(nextPage)) {
+
+                        let page = getFromLocalStorage(nextPage);
+                        renderPeople(page);
+                        addPaginator(page, "people");
+                    } else {
+                        fetchGetPeople(nextPage)
+                    }
                     break;
+
                 case "films":
-                    fetchGetFilms(nextPage);
+                    if (checkLocalStorage(nextPage)) {
+
+                        let page = getFromLocalStorage(nextPage);
+                        renderFilms(page);
+                        addPaginator(page, "films");
+                    } else {
+                        fetchGetFilms(nextPage)
+                    }
                     break;
                 case "starships":
-                    fetchStarShips(nextPage);
+
+                    if (checkLocalStorage(nextPage)) {
+                        let page = getFromLocalStorage(nextPage);
+                        renderStarships(page);
+                        addPaginator(page, "starships");
+                    } else {
+                        fetchStarShips(nextPage)
+                    }
                     break;
+
                 case "vehicles":
-                    fetchVehicles(nextPage);
+                    if (checkLocalStorage(nextPage)) {
+                        let page = getFromLocalStorage(nextPage);
+                        renderVehicles(page);
+                        addPaginator(page, "vehicles");
+                    } else {
+                        fetchVehicles(nextPage)
+                    }
                     break;
                 case "species":
-                    fetchSpecies(nextPage);
+                    if (checkLocalStorage(nextPage)) {
+                        let page = getFromLocalStorage(nextPage);
+                        renderSpecies(page);
+                        addPaginator(page, "species");
+                    } else {
+                        fetchSpecies(nextPage)
+                    }
                     break;
                 case "planets":
-                    fetchPlanets(nextPage);
+                    if (checkLocalStorage(nextPage)) {
+                        let page = getFromLocalStorage(nextPage);
+                        renderPlanets(page);
+                        addPaginator(page, "planets");
+                    } else {
+                        fetchPlanets(nextPage);
+                    }
                     break;
             }
         }
     }
 
 
-    function getPeople() {
+    function checkLocalStorage(tab) {
+        let requestTab = localStorage.getItem(tab);
+        if (requestTab) {
+            return true;
+        } else {
+            return false
+        }
+    }
 
+    function setToLocalStorage(key, val) {
+        localStorage.setItem(key, JSON.stringify(val));
+    }
+
+    function getFromLocalStorage(page) {
+
+        let pageFromLocalStorage = JSON.parse(localStorage.getItem(page));
+
+        return pageFromLocalStorage
+    }
+
+
+    function onFetchError(tab, message) {
+
+        let warning = `<div class="alert alert-danger" role="alert">
+                          ${message}
+                      </div>`
+        document.querySelector(tab).innerHTML = warning;
+        document.querySelector(".pagination").innerHTML = "";
+    }
+
+    function getPeople() {
         addPreloader("#nav-people");
 
-        fetchGetPeople();
+        if (checkLocalStorage("https://swapi.dev/api/people")) {
+            let page = getFromLocalStorage("https://swapi.dev/api/people");
+            renderPeople(page);
+            addPaginator(page, "people");
+        } else {
+            fetchGetPeople();
+        }
+
     };
 
 
@@ -128,17 +199,37 @@ window.onload = function () {
         let currentUrl = url ? url : "https://swapi.dev/api/people";
 
         fetch(currentUrl)
-            .then(response =>
-                response.json())
+            .then(response => {
+                if (response.ok) {
+                    let result = response.json();
+                    return result;
+                } else {
+                    throw new Error(`on loading page. Error code: ${response.status}`)
+                }
+            })
 
             .then(people => {
-
+                renderPeople(people);
                 addPaginator(people, "people");
 
-                let renderPeople = people.results.map(function (item, i) {
+                if (!checkLocalStorage(currentUrl)) {
+                    setToLocalStorage(currentUrl, people);
+                }
+            })
+            .catch(error =>
+                onFetchError("#nav-people", error)
+            )
 
-                    return (
-                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+
+    };
+
+
+    function renderPeople(people) {
+
+        let renderPeople = people.results.map(function (item, i) {
+
+            return (
+                `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
@@ -168,22 +259,24 @@ window.onload = function () {
                              
                          </div>`)
 
-                });
-                return renderPeople;
-            })
+        });
 
-            .then(renderPeople => {
-                document.querySelector("#nav-people").innerHTML = renderPeople.join("");
-                addShowMoreButton();
-            })
-    };
+        document.querySelector("#nav-people").innerHTML = renderPeople.join("");
+        addShowMoreButton();
+    }
 
 
     function getFilms() {
 
         addPreloader("#nav-films");
 
-        fetchGetFilms();
+        if (checkLocalStorage("https://swapi.dev/api/films")) {
+            let page = getFromLocalStorage("https://swapi.dev/api/films");
+            renderFilms(page);
+            addPaginator(page, "films");
+        } else {
+            fetchGetFilms();
+        }
     }
 
 
@@ -192,18 +285,34 @@ window.onload = function () {
         let currentUrl = url ? url : "https://swapi.dev/api/films";
 
         fetch(currentUrl)
-            .then(response =>
-                response.json())
+            .then(response => {
+                if (response.ok) {
+                    let result = response.json();
+                    return result;
+                } else {
+                    throw new Error(`on loading page. Error code: ${response.status}`)
+                }
+            })
 
             .then(films => {
-
+                renderFilms(films);
                 addPaginator(films, "films");
 
-                let renderFilms = films.results.map(function (item, i) {
+                if (!checkLocalStorage(currentUrl)) {
+                    setToLocalStorage(currentUrl, films);
+                }
+            })
+            .catch(error =>
+                onFetchError("#nav-films", error)
+            )
+    }
 
 
-                    return (
-                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+    function renderFilms(films) {
+
+        let renderFilms = films.results.map(function (item, i) {
+            return (
+                `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.title}</h5>
                             </div>
@@ -231,14 +340,9 @@ window.onload = function () {
                              
                          </div>`)
 
-                });
-                return renderFilms;
-            })
-
-            .then(renderFilms => {
-                document.querySelector("#nav-films").innerHTML = renderFilms.join("");
-                addShowMoreButton();
-            })
+        });
+        document.querySelector("#nav-films").innerHTML = renderFilms.join("");
+        addShowMoreButton();
     }
 
 
@@ -246,26 +350,51 @@ window.onload = function () {
 
         addPreloader("#nav-starships");
 
-        fetchStarShips();
+        if (checkLocalStorage("https://swapi.dev/api/starships")) {
+            let page = getFromLocalStorage("https://swapi.dev/api/starships");
+            renderStarships(page);
+            addPaginator(page, "starships");
+        } else {
+            fetchStarShips();
+        }
+
     }
+
 
     function fetchStarShips(url) {
 
         let currentUrl = url ? url : "https://swapi.dev/api/starships";
 
         fetch(currentUrl)
-            .then(response =>
-                response.json())
+            .then(response => {
+                if (response.ok) {
+                    let result = response.json();
+                    return result;
+                } else {
+                    throw new Error(`on loading page. Error code: ${response.status}`)
+                }
+            })
 
             .then(starships => {
-
+                renderStarships(starships);
                 addPaginator(starships, "starships");
 
-                let renderStarships = starships.results.map(function (item, i) {
+                if (!checkLocalStorage(currentUrl)) {
+                    setToLocalStorage(currentUrl, starships);
+                }
+            })
+            .catch(error =>
+                onFetchError("#nav-starships", error)
+            )
+    }
 
 
-                    return (
-                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+    function renderStarships(starships) {
+
+        let renderStarships = starships.results.map(function (item, i) {
+
+            return (
+                `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
@@ -300,14 +429,9 @@ window.onload = function () {
                              
                          </div>`)
 
-                });
-                return renderStarships;
-            })
-
-            .then(renderStarships => {
-                document.querySelector("#nav-starships").innerHTML = renderStarships.join("");
-                addShowMoreButton();
-            })
+        });
+        document.querySelector("#nav-starships").innerHTML = renderStarships.join("");
+        addShowMoreButton();
     }
 
 
@@ -315,7 +439,13 @@ window.onload = function () {
 
         addPreloader("#nav-vehicles");
 
-        fetchVehicles();
+        if (checkLocalStorage("https://swapi.dev/api/vehicles")) {
+            let page = getFromLocalStorage("https://swapi.dev/api/vehicles");
+            renderVehicles(page);
+            addPaginator(page, "vehicles");
+        } else {
+            fetchVehicles();
+        }
     }
 
 
@@ -324,17 +454,34 @@ window.onload = function () {
         let currentUrl = url ? url : "https://swapi.dev/api/vehicles";
 
         fetch(currentUrl)
-            .then(response =>
-                response.json())
+            .then(response => {
+                if (response.ok) {
+                    let result = response.json();
+                    return result;
+                } else {
+                    throw new Error(`on loading page. Error code: ${response.status}`)
+                }
+            })
 
             .then(vehicles => {
-
+                renderVehicles(vehicles);
                 addPaginator(vehicles, "vehicles");
-                let renderVehicles = vehicles.results.map(function (item, i) {
+
+                if (!checkLocalStorage(currentUrl)) {
+                    setToLocalStorage(currentUrl, vehicles);
+                }
+            })
+            .catch(error =>
+                onFetchError("#nav-vehicles", error)
+            )
+    }
 
 
-                    return (
-                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+    function renderVehicles(vehicles) {
+        let renderVehicles = vehicles.results.map(function (item, i) {
+
+            return (
+                `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
@@ -366,14 +513,9 @@ window.onload = function () {
                              
                          </div>`)
 
-                });
-                return renderVehicles;
-            })
-
-            .then(renderVehicles => {
-                document.querySelector("#nav-vehicles").innerHTML = renderVehicles.join("");
-                addShowMoreButton();
-            })
+        });
+        document.querySelector("#nav-vehicles").innerHTML = renderVehicles.join("");
+        addShowMoreButton();
     }
 
 
@@ -381,7 +523,13 @@ window.onload = function () {
 
         addPreloader("#nav-species");
 
-        fetchSpecies();
+        if (checkLocalStorage("https://swapi.dev/api/species")) {
+            let page = getFromLocalStorage("https://swapi.dev/api/species");
+            renderSpecies(page);
+            addPaginator(page, "species");
+        } else {
+            fetchSpecies();
+        }
     }
 
 
@@ -390,17 +538,35 @@ window.onload = function () {
         let currentUrl = url ? url : "https://swapi.dev/api/species";
 
         fetch(currentUrl)
-            .then(response =>
-                response.json())
+            .then(response => {
+                if (response.ok) {
+                    let result = response.json();
+                    return result;
+                } else {
+                    throw new Error(`on loading page. Error code: ${response.status}`)
+                }
+            })
 
             .then(species => {
-
+                renderSpecies(species);
                 addPaginator(species, "species");
-                let renderSpecies = species.results.map(function (item, i) {
+
+                if (!checkLocalStorage(currentUrl)) {
+                    setToLocalStorage(currentUrl, species);
+                }
+            })
+            .catch(error =>
+                onFetchError("#nav-species", error)
+            )
+    }
 
 
-                    return (
-                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+    function renderSpecies(species) {
+        let renderSpecies = species.results.map(function (item, i) {
+
+
+            return (
+                `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
@@ -432,14 +598,9 @@ window.onload = function () {
                              
                          </div>`)
 
-                });
-                return renderSpecies;
-            })
-
-            .then(renderSpecies => {
-                document.querySelector("#nav-species").innerHTML = renderSpecies.join("");
-                addShowMoreButton();
-            })
+        });
+        document.querySelector("#nav-species").innerHTML = renderSpecies.join("");
+        addShowMoreButton();
     }
 
 
@@ -447,7 +608,13 @@ window.onload = function () {
 
         addPreloader("#nav-planets");
 
-        fetchPlanets();
+        if (checkLocalStorage("https://swapi.dev/api/planets")) {
+            let page = getFromLocalStorage("https://swapi.dev/api/planets");
+            renderPlanets(page);
+            addPaginator(page, "planets");
+        } else {
+            fetchPlanets();
+        }
     }
 
 
@@ -456,17 +623,34 @@ window.onload = function () {
         let currentUrl = url ? url : "https://swapi.dev/api/planets";
 
         fetch(currentUrl)
-            .then(response =>
-                response.json())
+            .then(response => {
+                if (response.ok) {
+                    let result = response.json();
+                    return result;
+                } else {
+                    throw new Error(`on loading page. Error code: ${response.status}`)
+                }
+            })
 
             .then(planets => {
+                renderPlanets(planets);
                 addPaginator(planets, "planets");
 
-                let renderPlanets = planets.results.map(function (item, i) {
+                if (!checkLocalStorage(currentUrl)) {
+                    setToLocalStorage(currentUrl, planets);
+                }
+            })
+            .catch(error =>
+                onFetchError("#nav-planets", error)
+            )
+    }
+
+    function renderPlanets(planets) {
+        let renderPlanets = planets.results.map(function (item, i) {
 
 
-                    return (
-                        `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+            return (
+                `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
@@ -498,15 +682,12 @@ window.onload = function () {
                              
                          </div>`)
 
-                });
-                return renderPlanets;
-            })
-
-            .then(renderPlanets => {
-                document.querySelector("#nav-planets").innerHTML = renderPlanets.join("");
-                addShowMoreButton();
-            })
+        });
+        document.querySelector("#nav-planets").innerHTML = renderPlanets.join("");
+        addShowMoreButton();
     }
+
+
 }
 
 
