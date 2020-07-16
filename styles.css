@@ -59,6 +59,13 @@
     outline: none;
 }
 
+
+.search-panel {
+    height: 60px;
+    padding-top: 30px;
+    padding-left: 60px;
+}
+
 .pagination-bar {
     height: 60px;
     padding-top: 30px;
