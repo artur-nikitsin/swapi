@@ -180,7 +180,92 @@ window.onload = function () {
         document.querySelector(".pagination").innerHTML = "";
     }
 
+
+    function findActiveTab() {
+        let activeTab = document.querySelector("div.tab-content  div.active");
+
+        return activeTab.id;
+    }
+
+
+    let searchPanel = document.querySelector(".search-button");
+    searchPanel.addEventListener("click", searchByName, false);
+
+    function searchByName(e) {
+        e.preventDefault();
+        let searchRequest = document.querySelector(".search-input").value;
+
+        let currentActiveTab = findActiveTab();
+
+        let resource = currentActiveTab.substr(4);
+
+        fetchSearchRequest(searchRequest, resource);
+    }
+
+
+    function fetchSearchRequest(req, resource) {
+
+        let searchUrl = `https://swapi.dev/api/${resource}/?search=`;
+        fetch(searchUrl + req)
+            .then(response => {
+                let answer = response.json();
+                return answer;
+
+            })
+            .then(answer => {
+                renderSearchResults(answer,resource)
+            })
+
+    };
+
+
+    function renderSearchResults(result, tab) {
+
+        let currentActiveTab = findActiveTab();
+
+        switch (currentActiveTab) {
+            case "nav-people":
+                addPreloader("#nav-people");
+                renderPeople(result);
+                addPaginator(result, tab);
+                break;
+            case "nav-films":
+                addPreloader("#nav-films");
+                renderFilms(result);
+                addPaginator(result, tab);
+                break;
+            case "nav-starships":
+                addPreloader("#nav-starships");
+                renderStarships(result);
+                addPaginator(result, tab);
+                break;
+            case "nav-vehicles":
+                addPreloader("#nav-vehicles");
+                renderVehicles(result);
+                addPaginator(result, tab);
+                break;
+            case "nav-species":
+                addPreloader("#nav-species");
+                renderSpecies(result);
+                addPaginator(result, tab);
+                break;
+            case "nav-planets":
+                addPreloader("#nav-planets");
+                renderPlanets(result);
+                addPaginator(result, tab);
+                break
+        }
+    }
+
+
+    function clearSearchInput() {
+        document.querySelector(".search-input").value="";
+    }
+
+
+
     function getPeople() {
+        clearSearchInput();
         addPreloader("#nav-people");
 
         if (checkLocalStorage("https://swapi.dev/api/people")) {
@@ -267,7 +352,7 @@ window.onload = function () {
 
 
     function getFilms() {
-
+        clearSearchInput();
         addPreloader("#nav-films");
 
         if (checkLocalStorage("https://swapi.dev/api/films")) {
@@ -347,7 +432,7 @@ window.onload = function () {
 
 
     function getStarShips() {
-
+        clearSearchInput();
         addPreloader("#nav-starships");
 
         if (checkLocalStorage("https://swapi.dev/api/starships")) {
@@ -436,7 +521,7 @@ window.onload = function () {
 
 
     function getVehicles() {
-
+        clearSearchInput();
         addPreloader("#nav-vehicles");
 
         if (checkLocalStorage("https://swapi.dev/api/vehicles")) {
@@ -520,7 +605,7 @@ window.onload = function () {
 
 
     function getSpecies() {
-
+        clearSearchInput();
         addPreloader("#nav-species");
 
         if (checkLocalStorage("https://swapi.dev/api/species")) {
@@ -605,7 +690,7 @@ window.onload = function () {
 
 
     function getPlanets() {
-
+        clearSearchInput();
         addPreloader("#nav-planets");
 
         if (checkLocalStorage("https://swapi.dev/api/planets")) {
