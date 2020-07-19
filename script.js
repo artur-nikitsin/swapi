@@ -259,7 +259,7 @@ window.onload = function () {
                 if (result.count === 0) {
                     showNoneResults("#nav-people");
                 } else {
-                    showResultsHeaders();
+                    showResultsHeaders(true);
                     renderPeople(result);
                     addPaginator(result, tab, url);
                 }
@@ -269,7 +269,7 @@ window.onload = function () {
                 if (result.count === 0) {
                     showNoneResults("#nav-films");
                 } else {
-                    showResultsHeaders();
+                    showResultsHeaders(true);
                     renderFilms(result);
                     addPaginator(result, tab, url);
                 }
@@ -279,7 +279,7 @@ window.onload = function () {
                 if (result.count === 0) {
                     showNoneResults("#nav-starships");
                 } else {
-                    showResultsHeaders();
+                    showResultsHeaders(true);
                     renderStarships(result);
                     addPaginator(result, tab, url);
                 }
@@ -289,7 +289,7 @@ window.onload = function () {
                 if (result.count === 0) {
                     showNoneResults("#nav-vehicles");
                 } else {
-                    showResultsHeaders();
+                    showResultsHeaders(true);
                     renderVehicles(result);
                     addPaginator(result, tab, url);
                 }
@@ -299,7 +299,7 @@ window.onload = function () {
                 if (result.count === 0) {
                     showNoneResults("#nav-species");
                 } else {
-                    showResultsHeaders();
+                    showResultsHeaders(true);
                     renderSpecies(result);
                     addPaginator(result, tab, url);
                 }
@@ -309,7 +309,7 @@ window.onload = function () {
                 if (result.count === 0) {
                     showNoneResults("#nav-planets");
                 } else {
-                    showResultsHeaders();
+                    showResultsHeaders(true);
                     renderPlanets(result);
                     addPaginator(result, tab, url);
                 }
@@ -318,7 +318,8 @@ window.onload = function () {
     }
 
 
-    function showResultsHeaders(tab) {
+    function showResultsHeaders(success) {
+
         document.querySelector(".search-message").innerHTML =
             `<div>
                   <a href="#" class="return-button"> 
@@ -332,7 +333,7 @@ window.onload = function () {
                              <path fill-rule="evenodd" d="M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z"/>
                   </svg>
                   return to full list</a>
-                 <p class="search-results-header">Search results:<p/>                       
+                ${ success ?`<p class="search-results-header">Search results:<p/>`: ""}               
            </div>`;
         document.querySelector(".return-button").addEventListener("click", returnToFullList, false)
     }
@@ -375,6 +376,8 @@ window.onload = function () {
         let noResultMessage = `<div class="alert alert-success" role="alert">
                                  No search results
                               </div>`;
+
+        showResultsHeaders(false);
         document.querySelector(".pagination").innerHTML = "";
         document.querySelector(tab).innerHTML = noResultMessage;
     };
