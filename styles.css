@@ -77,6 +77,12 @@
     border:  1px solid rgba(0, 137, 0, 255);
 }
 
+.search-message{
+    min-height: 40px;
+    padding-top: 30px;
+    padding-left: 60px;
+    margin-right: 20px;
+}
 .pagination-bar {
     height: 60px;
     padding-top: 30px;
