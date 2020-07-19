@@ -42,10 +42,9 @@
     color: black;
 }
 
-.nav-tabs > .active {
-    color: green;
+.nav-tabs > .nav-link.active {
+    color: rgba(0, 137, 0, 255);
     font-weight: bold;
-    background: black;
 }
 
 .showMoreLessButton {
@@ -62,13 +61,29 @@
 
 
 .search-panel {
-    height: 60px;
+    min-height: 60px;
     padding-top: 30px;
     padding-left: 60px;
+    margin-right: 20px;
+
+}
+
+
+.search-input:focus,
+.search-input:active,
+.search-input:visited {
+    box-shadow: 0 0 10px rgba(89, 128, 49, 0.5);
+    outline: none;
+    border:  1px solid rgba(0, 137, 0, 255);
 }
 
 .pagination-bar {
     height: 60px;
     padding-top: 30px;
     padding-left: 60px;
+}
+
+.page-item.active .page-link {
+    background-color: rgba(0, 137, 0, 255);
+    border-color: rgba(0, 137, 0, 255);
 }

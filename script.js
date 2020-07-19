@@ -50,13 +50,22 @@ window.onload = function () {
     addPreloader();
 
 
-    function addPaginator(response, tab) {
+    function addPaginator(response, tab, url) {
 
         if (response.count > 10) {
 
-            let allPages = response.results.map(function (item, i) {
-                return ` <li class="page-item"><a class="page-link" href="${response.next}" data-tab="${tab}">${i+1}</a></li>`
-            })
+
+            let pageNumbers = Math.ceil(response.count / 10);
+
+            let allPages = [];
+
+            let activePage = response.next ? response.next.split("=")[1] - 1 : +response.previous.split("=")[1] + 1;
+
+
+            for (let i = 1; i <= pageNumbers; i++) {
+                let pageNumber = ` <li class="page-item  ${activePage === i ? "active" : ""}"><a class="page-link" href="${url + (i)}" data-tab="${tab}">${i}</a></li>`;
+                allPages.push(pageNumber);
+            }
 
 
             let paginator = ` <nav aria-label="Page navigation example">
@@ -97,7 +106,7 @@ window.onload = function () {
 
                         let page = getFromLocalStorage(nextPage);
                         renderPeople(page);
-                        addPaginator(page, "people");
+                        addPaginator(page, "people", "http://swapi.dev/api/people/?page=");
                     } else {
                         fetchGetPeople(nextPage)
                     }
@@ -108,7 +117,7 @@ window.onload = function () {
 
                         let page = getFromLocalStorage(nextPage);
                         renderFilms(page);
-                        addPaginator(page, "films");
+                        addPaginator(page, "films", "http://swapi.dev/api/films/?page=");
                     } else {
                         fetchGetFilms(nextPage)
                     }
@@ -118,7 +127,7 @@ window.onload = function () {
                     if (checkLocalStorage(nextPage)) {
                         let page = getFromLocalStorage(nextPage);
                         renderStarships(page);
-                        addPaginator(page, "starships");
+                        addPaginator(page, "starships", "http://swapi.dev/api/starships/?page=");
                     } else {
                         fetchStarShips(nextPage)
                     }
@@ -128,7 +137,7 @@ window.onload = function () {
                     if (checkLocalStorage(nextPage)) {
                         let page = getFromLocalStorage(nextPage);
                         renderVehicles(page);
-                        addPaginator(page, "vehicles");
+                        addPaginator(page, "vehicles", "http://swapi.dev/api/vehicles/?page=");
                     } else {
                         fetchVehicles(nextPage)
                     }
@@ -137,7 +146,7 @@ window.onload = function () {
                     if (checkLocalStorage(nextPage)) {
                         let page = getFromLocalStorage(nextPage);
                         renderSpecies(page);
-                        addPaginator(page, "species");
+                        addPaginator(page, "species", "http://swapi.dev/api/species/?page=");
                     } else {
                         fetchSpecies(nextPage)
                     }
@@ -146,7 +155,7 @@ window.onload = function () {
                     if (checkLocalStorage(nextPage)) {
                         let page = getFromLocalStorage(nextPage);
                         renderPlanets(page);
-                        addPaginator(page, "planets");
+                        addPaginator(page, "planets", "http://swapi.dev/api/planets/?page=");
                     } else {
                         fetchPlanets(nextPage);
                     }
@@ -232,36 +241,69 @@ window.onload = function () {
         switch (currentActiveTab) {
             case "nav-people":
                 addPreloader("#nav-people");
-                renderPeople(result);
-                addPaginator(result, tab);
+                if (result.count === 0) {
+                    showNoneResults("#nav-people");
+                } else {
+                    renderPeople(result);
+                    addPaginator(result, tab, "http://swapi.dev/api/people/?page=");
+                }
                 break;
             case "nav-films":
                 addPreloader("#nav-films");
-                renderFilms(result);
-                addPaginator(result, tab);
+                if (result.count === 0) {
+                    showNoneResults("#nav-films");
+                } else {
+                    renderFilms(result);
+                    addPaginator(result, tab, "http://swapi.dev/api/films/?page=");
+                }
                 break;
             case "nav-starships":
                 addPreloader("#nav-starships");
-                renderStarships(result);
-                addPaginator(result, tab);
+                if (result.count === 0) {
+                    showNoneResults("#nav-starships");
+                } else {
+                    renderStarships(result);
+                    addPaginator(result, tab, "http://swapi.dev/api/starships/?page=");
+                }
                 break;
             case "nav-vehicles":
                 addPreloader("#nav-vehicles");
-                renderVehicles(result);
-                addPaginator(result, tab);
+                if (result.count === 0) {
+                    showNoneResults("#nav-vehicles");
+                } else {
+                    renderVehicles(result);
+                    addPaginator(result, tab, "http://swapi.dev/api/vehicles/?page=");
+                }
                 break;
             case "nav-species":
                 addPreloader("#nav-species");
-                renderSpecies(result);
-                addPaginator(result, tab);
+                if (result.count === 0) {
+                    showNoneResults("#nav-species");
+                } else {
+                    renderSpecies(result);
+                    addPaginator(result, tab, "http://swapi.dev/api/species/?page=");
+                }
                 break;
             case "nav-planets":
                 addPreloader("#nav-planets");
-                renderPlanets(result);
-                addPaginator(result, tab);
+                if (result.count === 0) {
+                    showNoneResults("#nav-planets");
+                } else {
+                    renderPlanets(result);
+                    addPaginator(result, tab, "http://swapi.dev/api/planets/?page=");
+                }
                 break
         }
     }
+
+
+    function showNoneResults(tab) {
+        let noResultMessage = `<div class="alert alert-success" role="alert">
+                                 No search results
+                              </div>`;
+        document.querySelector(".pagination").innerHTML = "";
+        document.querySelector(tab).innerHTML = noResultMessage;
+    };
 
 
     function clearSearchInput() {
@@ -276,7 +318,7 @@ window.onload = function () {
         if (checkLocalStorage("http://swapi.dev/api/people/?page=1")) {
             let page = getFromLocalStorage("http://swapi.dev/api/people/?page=1");
             renderPeople(page);
-            addPaginator(page, "people");
+            addPaginator(page, "people", "http://swapi.dev/api/people/?page=");
         } else {
             fetchGetPeople();
         }
@@ -288,6 +330,7 @@ window.onload = function () {
 
         let currentUrl = url ? url : "http://swapi.dev/api/people/?page=1";
 
+        console.log(url);
         fetch(currentUrl)
             .then(response => {
                 if (response.ok) {
@@ -300,7 +343,7 @@ window.onload = function () {
 
             .then(people => {
                 renderPeople(people);
-                addPaginator(people, "people");
+                addPaginator(people, "people", "http://swapi.dev/api/people/?page=");
 
                 if (!checkLocalStorage(currentUrl)) {
                     setToLocalStorage(currentUrl, people);
@@ -363,7 +406,7 @@ window.onload = function () {
         if (checkLocalStorage("http://swapi.dev/api/films")) {
             let page = getFromLocalStorage("http://swapi.dev/api/films");
             renderFilms(page);
-            addPaginator(page, "films");
+            addPaginator(page, "films", "http://swapi.dev/api/films/?page=");
         } else {
             fetchGetFilms();
         }
@@ -386,7 +429,7 @@ window.onload = function () {
 
             .then(films => {
                 renderFilms(films);
-                addPaginator(films, "films");
+                addPaginator(films, "films", "http://swapi.dev/api/films/?page=");
 
                 if (!checkLocalStorage(currentUrl)) {
                     setToLocalStorage(currentUrl, films);
@@ -443,7 +486,7 @@ window.onload = function () {
         if (checkLocalStorage("http://swapi.dev/api/starships/?page=1")) {
             let page = getFromLocalStorage("http://swapi.dev/api/starships/?page=1");
             renderStarships(page);
-            addPaginator(page, "starships");
+            addPaginator(page, "starships", "http://swapi.dev/api/starships/?page=");
         } else {
             fetchStarShips();
         }
@@ -467,7 +510,7 @@ window.onload = function () {
 
             .then(starships => {
                 renderStarships(starships);
-                addPaginator(starships, "starships");
+                addPaginator(starships, "starships", "http://swapi.dev/api/starships/?page=");
 
                 if (!checkLocalStorage(currentUrl)) {
                     setToLocalStorage(currentUrl, starships);
@@ -532,7 +575,7 @@ window.onload = function () {
         if (checkLocalStorage("http://swapi.dev/api/vehicles/?page=1")) {
             let page = getFromLocalStorage("http://swapi.dev/api/vehicles/?page=1");
             renderVehicles(page);
-            addPaginator(page, "vehicles");
+            addPaginator(page, "vehicles", "http://swapi.dev/api/vehicles/?page=");
         } else {
             fetchVehicles();
         }
@@ -555,7 +598,7 @@ window.onload = function () {
 
             .then(vehicles => {
                 renderVehicles(vehicles);
-                addPaginator(vehicles, "vehicles");
+                addPaginator(vehicles, "vehicles", "http://swapi.dev/api/vehicles/?page=");
 
                 if (!checkLocalStorage(currentUrl)) {
                     setToLocalStorage(currentUrl, vehicles);
@@ -616,7 +659,7 @@ window.onload = function () {
         if (checkLocalStorage("http://swapi.dev/api/species/?page=1")) {
             let page = getFromLocalStorage("http://swapi.dev/api/species/?page=1");
             renderSpecies(page);
-            addPaginator(page, "species");
+            addPaginator(page, "species", "http://swapi.dev/api/species/?page=");
         } else {
             fetchSpecies();
         }
@@ -639,7 +682,7 @@ window.onload = function () {
 
             .then(species => {
                 renderSpecies(species);
-                addPaginator(species, "species");
+                addPaginator(species, "species", "http://swapi.dev/api/species/?page=");
 
                 if (!checkLocalStorage(currentUrl)) {
                     setToLocalStorage(currentUrl, species);
@@ -701,7 +744,7 @@ window.onload = function () {
         if (checkLocalStorage("http://swapi.dev/api/planets/?page=1")) {
             let page = getFromLocalStorage("http://swapi.dev/api/planets/?page=1");
             renderPlanets(page);
-            addPaginator(page, "planets");
+            addPaginator(page, "planets", "http://swapi.dev/api/planets/?page=");
         } else {
             fetchPlanets();
         }
@@ -724,7 +767,7 @@ window.onload = function () {
 
             .then(planets => {
                 renderPlanets(planets);
-                addPaginator(planets, "planets");
+                addPaginator(planets, "planets", "http://swapi.dev/api/planets/?page=");
 
                 if (!checkLocalStorage(currentUrl)) {
                     setToLocalStorage(currentUrl, planets);
