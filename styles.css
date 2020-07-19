@@ -83,6 +83,11 @@
     padding-left: 60px;
     margin-right: 20px;
 }
+.search-results-header{
+    margin-top: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
 .pagination-bar {
     height: 60px;
     padding-top: 30px;
