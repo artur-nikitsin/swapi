@@ -1,5 +1,20 @@
-.appHeader {
-    margin-bottom: 40px;
+.header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+
+}
+.header-language {
+    display: flex;
+    padding-left-left: 20px;
+    flex-flow: column wrap;
+    align-items: flex-end;
+}
+
+.header-name {
+   /* margin-bottom: 40px;*/
 }
 
 .container {
@@ -12,7 +27,7 @@
 }
 
 
-@media screen and (min-width:1200px) {
+@media screen and (min-width: 1200px) {
     #nav-tabContent .active {
         display: flex;
         flex-flow: row wrap;
@@ -24,7 +39,7 @@
     }
 }
 
-@media screen and (max-width:1199px) {
+@media screen and (max-width: 1199px) {
     #nav-tabContent .active {
         display: flex;
         flex-flow: row wrap;
@@ -101,9 +116,10 @@
     margin-right: 20px;
 }
 
-.no-search-message{
+.no-search-message {
     margin: auto;
 }
+
 .search-results-header {
     margin-top: 10px;
     text-transform: uppercase;

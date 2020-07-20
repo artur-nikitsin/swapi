@@ -11,8 +11,129 @@ window.onload = function () {
 
     getPeople();
 
-    function addShowMoreButton() {
 
+    function checkSiteLanguage() {
+        let lang = null;
+        if (checkLocalStorage("lang")) {
+            let currentLang = JSON.parse(localStorage.getItem("lang"));
+            setSiteLanguage(currentLang);
+            lang = currentLang;
+        } else {
+            setToLocalStorage("lang", "eng");
+            setSiteLanguage("eng");
+            lang = "eng";
+        }
+        return lang;
+    }
+
+    checkSiteLanguage();
+
+
+    function setSiteLanguage(lang) {
+
+        switch (lang) {
+            case "eng":
+                document.querySelector(".language-notice").textContent = "Site language:";
+                document.querySelector("#nav-people-tab").textContent = "People";
+                document.querySelector("#nav-films-tab").textContent = "Films";
+                document.querySelector("#nav-starships-tab").textContent = "Starships";
+                document.querySelector("#nav-vehicles-tab").textContent = "Vehicles";
+                document.querySelector("#nav-species-tab").textContent = "Species";
+                document.querySelector("#nav-planets-tab").textContent = "People";
+                document.querySelector(".search-button").textContent = "Search"
+                document.querySelector(".search-input").placeholder = "Search";
+
+                let moreButtonEng = document.querySelectorAll(".showMoreLessButton");
+                if (moreButtonEng) {
+
+                    [].forEach.call(moreButtonEng, function (button) {
+                        button.textContent = "More...";
+                    });
+                }
+
+                let nextButtonEng = document.querySelector(".next-button");
+                if (nextButtonEng) {
+                    nextButtonEng.textContent = "Next";
+                }
+                ;
+                let previousButtonEng = document.querySelector(".previous-button");
+                if (previousButtonEng) {
+                    previousButtonEng.textContent = "Previous";
+                }
+                ;
+
+                let backButtonEng = document.querySelector(".return-button");
+                if (backButtonEng) {
+                    backButtonEng.textContent = "< return to full list";
+                }
+                let noResultsMsgEng = document.querySelector(".no-search-message");
+                if (noResultsMsgEng) {
+                    noResultsMsgEng.textContent = "No search results";
+                }
+                break;
+
+            case "ru":
+                document.querySelector(".toggle").classList.add("off");
+                document.querySelector(".language-notice").textContent = "Язык сайта:";
+                document.querySelector("#nav-people-tab").textContent = "Люди";
+                document.querySelector("#nav-films-tab").textContent = "Фильмы";
+                document.querySelector("#nav-starships-tab").textContent = "Звездолеты";
+                document.querySelector("#nav-vehicles-tab").textContent = "Транспортные средства";
+                document.querySelector("#nav-species-tab").textContent = "Виды";
+                document.querySelector("#nav-planets-tab").textContent = "Планеты";
+                document.querySelector(".search-button").textContent = "Поиск";
+                document.querySelector(".search-input").placeholder = "Поиск";
+
+                let moreButtonRu = document.querySelectorAll(".showMoreLessButton");
+                if (moreButtonRu) {
+                    [].forEach.call(moreButtonRu, function (button) {
+                        button.textContent = "Подробнее";
+                    });
+                }
+                let nextButtonRu = document.querySelector(".next-button");
+                if (nextButtonRu) {
+                    nextButtonRu.textContent = "Следующая";
+                }
+                ;
+                let previousButtonRu = document.querySelector(".previous-button");
+                if (previousButtonRu) {
+                    previousButtonRu.textContent = "Предыдущая";
+                }
+                ;
+                let backButtonRu = document.querySelector(".return-button");
+                if (backButtonRu) {
+                    backButtonRu.textContent = "< вернуться к полному списку";
+                }
+                let noResultsMsgRu = document.querySelector(".no-search-message");
+                if (noResultsMsgRu) {
+                    noResultsMsgRu.textContent = "Ничего не найдено";
+                }
+                break;
+        }
+
+
+    }
+
+    document.querySelector(".toggle").addEventListener("click", changeSiteLanguage, false);
+
+    function changeSiteLanguage(e) {
+
+        let isEnglish = this.classList.contains("off");
+
+        if (isEnglish) {
+            setSiteLanguage("eng");
+            setToLocalStorage("lang", "eng");
+
+        } else {
+            setSiteLanguage("ru");
+            setToLocalStorage("lang", "ru");
+
+        }
+    }
+
+
+    function addShowMoreButton() {
+        checkSiteLanguage();
         let collapseButtons = document.querySelectorAll(".showMoreLessButton");
 
         [].forEach.call(collapseButtons, function (button) {
@@ -23,10 +144,10 @@ window.onload = function () {
 
             let currentButton = this;
 
-            if (currentButton.textContent === "More...") {
-                currentButton.innerText = "Less"
+            if (currentButton.textContent === "More..." || currentButton.textContent === "Подробнее") {
+                currentButton.innerText = (checkSiteLanguage() === "eng") ? "Less" : "Меньше";
             } else {
-                currentButton.innerText = "More..."
+                currentButton.innerText = (checkSiteLanguage() === "eng") ? "More..." : "Подробнее";
             }
         }
     };
@@ -70,9 +191,9 @@ window.onload = function () {
 
             let paginator = ` <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item ${response.previous ? "" : "disabled"}"><a class="page-link" href="${response.previous}" data-tab="${tab}">Previous</a></li>
+                <li class="page-item ${response.previous ? "" : "disabled"} "><a class="page-link previous-button" href="${response.previous}" data-tab="${tab}">Previous</a></li>
                 ${allPages.join("")}
-                <li class="page-item ${response.next ? "" : "disabled"}"><a class="page-link" href="${response.next}" data-tab="${tab}">Next</a></li>
+                <li class="page-item ${response.next ? "" : "disabled"} "><a class="page-link next-button" href="${response.next}" data-tab="${tab}">Next</a></li>
             </ul>
         </nav>`;
 
@@ -83,7 +204,7 @@ window.onload = function () {
             [].forEach.call(pages, function (page) {
                 page.addEventListener("click", moveToAnotherPage, false);
             });
-
+            checkSiteLanguage();
         } else {
             document.querySelector(".pagination").innerHTML = "";
         }
@@ -333,9 +454,10 @@ window.onload = function () {
                              <path fill-rule="evenodd" d="M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z"/>
                   </svg>
                   return to full list</a>
-                ${ success ?`<p class="search-results-header">Search results:<p/>`: ""}               
+                ${success ? `<p class="search-results-header">Search results:<p/>` : ""}               
            </div>`;
-        document.querySelector(".return-button").addEventListener("click", returnToFullList, false)
+        document.querySelector(".return-button").addEventListener("click", returnToFullList, false);
+        checkSiteLanguage();
     }
 
     function deleteResultsHeaders() {
@@ -380,6 +502,7 @@ window.onload = function () {
         showResultsHeaders(false);
         document.querySelector(".pagination").innerHTML = "";
         document.querySelector(tab).innerHTML = noResultMessage;
+        checkSiteLanguage();
     };
 
 

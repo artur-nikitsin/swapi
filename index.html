@@ -5,7 +5,10 @@
     <title>Swapi</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+          rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
             crossorigin="anonymous"></script>
@@ -15,11 +18,22 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <script src="script.js"></script>
+
+
 </head>
 <body>
 <div class="container">
-    <h1 class="appHeader">SWAPI</h1>
+    <div class="header">
+        <h1 class="header-name">SWAPI</h1>
+        <div class="header-language">
+        <p class="language-notice">Site language:</p>
+        <input type="checkbox" data-size="sm" checked data-toggle="toggle" data-on="eng" data-off="ru" data-onstyle="light"
+               data-offstyle="secondary">
+        </div>
+    </div>
+
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-people-tab" data-toggle="tab" href="#nav-people" role="tab"
@@ -43,6 +57,7 @@
         <input class="form-control mr-sm-2 search-input" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0  search-button" type="submit">Search</button>
     </form>
+
 
     <div class="search-message"></div>
     <div class="tab-content" id="nav-tabContent">
