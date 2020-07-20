@@ -1,6 +1,5 @@
 window.onload = function () {
 
-
     document.querySelector("#nav-people-tab").addEventListener("click", getPeople, false)
     document.querySelector("#nav-films-tab").addEventListener("click", getFilms, false)
     document.querySelector("#nav-starships-tab").addEventListener("click", getStarShips, false)
@@ -41,9 +40,9 @@ window.onload = function () {
                 document.querySelector("#nav-species-tab").textContent = "Species";
                 document.querySelector("#nav-planets-tab").textContent = "People";
                 document.querySelector(".search-button").textContent = "Search"
-                document.querySelector(".search-input").placeholder = "Search";
+                document.querySelector(".search-panel__input").placeholder = "Search";
 
-                let moreButtonEng = document.querySelectorAll(".showMoreLessButton");
+                let moreButtonEng = document.querySelectorAll(".card__button");
                 if (moreButtonEng) {
 
                     [].forEach.call(moreButtonEng, function (button) {
@@ -82,9 +81,9 @@ window.onload = function () {
                 document.querySelector("#nav-species-tab").textContent = "Виды";
                 document.querySelector("#nav-planets-tab").textContent = "Планеты";
                 document.querySelector(".search-button").textContent = "Поиск";
-                document.querySelector(".search-input").placeholder = "Поиск";
+                document.querySelector(".search-panel__input").placeholder = "Поиск";
 
-                let moreButtonRu = document.querySelectorAll(".showMoreLessButton");
+                let moreButtonRu = document.querySelectorAll(".card__button");
                 if (moreButtonRu) {
                     [].forEach.call(moreButtonRu, function (button) {
                         button.textContent = "Подробнее";
@@ -134,7 +133,7 @@ window.onload = function () {
 
     function addShowMoreButton() {
         checkSiteLanguage();
-        let collapseButtons = document.querySelectorAll(".showMoreLessButton");
+        let collapseButtons = document.querySelectorAll(".card__button");
 
         [].forEach.call(collapseButtons, function (button) {
             button.addEventListener("click", changeButtonText, false);
@@ -337,7 +336,7 @@ window.onload = function () {
 
     function searchByName(e) {
         e.preventDefault();
-        let searchRequest = document.querySelector(".search-input").value;
+        let searchRequest = document.querySelector(".search-panel__input").value;
 
         if (searchRequest) {
             let currentActiveTab = findActiveTab();
@@ -507,7 +506,7 @@ window.onload = function () {
 
 
     function clearSearchInput() {
-        document.querySelector(".search-input").value = "";
+        document.querySelector(".search-panel__input").value = "";
     }
 
 
@@ -585,7 +584,7 @@ window.onload = function () {
                              
                              
                             <div class="card-footer bg-transparent border-success">
-                                <a class=" btn btn-link showMoreLessButton" data-toggle="collapse" 
+                                <a class=" btn btn-link card__button" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
                             </div>
@@ -667,7 +666,7 @@ window.onload = function () {
                             </div>
                              
                             <div class="card-footer bg-transparent border-success">
-                                <a class=" btn btn-link showMoreLessButton" data-toggle="collapse" 
+                                <a class=" btn btn-link card__button" data-toggle="collapse" 
                                 href="${"#" + item.title.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
                             </div>
@@ -757,7 +756,7 @@ window.onload = function () {
                             </div>
                              
                             <div class="card-footer bg-transparent border-success">
-                                <a class=" btn btn-link showMoreLessButton" data-toggle="collapse" 
+                                <a class=" btn btn-link card__button" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
                             </div>
@@ -842,7 +841,7 @@ window.onload = function () {
                             </div>
                              
                             <div class="card-footer bg-transparent border-success">
-                                <a class=" btn btn-link showMoreLessButton" data-toggle="collapse" 
+                                <a class=" btn btn-link card__button" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
                             </div>
@@ -928,7 +927,7 @@ window.onload = function () {
                             </div>
                              
                             <div class="card-footer bg-transparent border-success">
-                                <a class=" btn btn-link showMoreLessButton" data-toggle="collapse" 
+                                <a class=" btn btn-link card__button" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
                             </div>
@@ -1013,7 +1012,7 @@ window.onload = function () {
                             </div>
                              
                             <div class="card-footer bg-transparent border-success">
-                                <a class=" btn btn-link showMoreLessButton" data-toggle="collapse" 
+                                <a class=" btn btn-link card__button" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
                             </div>
