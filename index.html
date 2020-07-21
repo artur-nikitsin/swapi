@@ -21,64 +21,55 @@
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <script src="script.js"></script>
 
-
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1 class="header__name">SWAPI</h1>
-        <div class="header__language-panel">
-            <p class="language-notice">Site language:</p>
-            <input type="checkbox" data-size="sm" checked data-toggle="toggle" data-on="eng" data-off="ru"
-                   data-onstyle="light"
-                   data-offstyle="secondary">
+    <div class="container">
+
+        <div class="header">
+            <h1 class="header__name">SWAPI</h1>
+            <div class="header__language-panel">
+                <p class="language-notice">Site language:</p>
+                <input type="checkbox" data-size="sm" checked data-toggle="toggle" data-on="eng" data-off="ru"
+                       data-onstyle="light"
+                       data-offstyle="secondary">
+            </div>
         </div>
-    </div>
 
-    <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-people-tab" data-toggle="tab" href="#nav-people" role="tab"
-               aria-controls="nav-profile" aria-selected="false">People</a>
-            <a class="nav-item nav-link" id="nav-films-tab" data-toggle="tab" href="#nav-films" role="tab"
-               aria-controls="nav-contact" aria-selected="false">Films</a>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-people-tab" data-toggle="tab" href="#nav-people" role="tab"
+                   aria-controls="nav-people" aria-selected="false">People</a>
+                <a class="nav-item nav-link" id="nav-films-tab" data-toggle="tab" href="#nav-films" role="tab"
+                   aria-controls="nav-films" aria-selected="false">Films</a>
+                <a class="nav-item nav-link" id="nav-starships-tab" data-toggle="tab" href="#nav-starships" role="tab"
+                   aria-controls="nav-starships" aria-selected="true">Starships</a>
+                <a class="nav-item nav-link" id="nav-vehicles-tab" data-toggle="tab" href="#nav-vehicles" role="tab"
+                   aria-controls="nav-vehicles" aria-selected="false">Vehicles</a>
+                <a class="nav-item nav-link" id="nav-species-tab" data-toggle="tab" href="#nav-species" role="tab"
+                   aria-controls="nav-species" aria-selected="false">Species</a>
+                <a class="nav-item nav-link" id="nav-planets-tab" data-toggle="tab" href="#nav-planets" role="tab"
+                   aria-controls="nav-planets" aria-selected="false">Planets</a>
+            </div>
+        </nav>
 
-            <a class="nav-item nav-link" id="nav-starships-tab" data-toggle="tab" href="#nav-starships" role="tab"
-               aria-controls="nav-home" aria-selected="true">Starships</a>
-            <a class="nav-item nav-link" id="nav-vehicles-tab" data-toggle="tab" href="#nav-vehicles" role="tab"
-               aria-controls="nav-profile" aria-selected="false">Vehicles</a>
-            <a class="nav-item nav-link" id="nav-species-tab" data-toggle="tab" href="#nav-species" role="tab"
-               aria-controls="nav-contact" aria-selected="false">Species</a>
-            <a class="nav-item nav-link" id="nav-planets-tab" data-toggle="tab" href="#nav-planets" role="tab"
-               aria-controls="nav-contact" aria-selected="false">Planets</a>
+        <form class="form-inline my-2 my-lg-0 search-panel">
+            <input class="form-control mr-sm-2 search-panel__input search-panel__input--active" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0  search-button" type="submit">Search</button>
+        </form>
+
+        <div class="search-message"></div>
+            <div class="tab-content tab-content--active" id="nav-tab-сontent">
+                <div class="tab-pane fade show active" id="nav-people" role="tabpanel" aria-labelledby="nav-people-tab"></div>
+                <div class="tab-pane fade" id="nav-films" role="tabpanel" aria-labelledby="nav-films-tab"></div>
+                <div class="tab-pane fade" id="nav-starships" role="tabpanel" aria-labelledby="nav-starships-tab"></div>
+                <div class="tab-pane fade" id="nav-vehicles" role="tabpanel" aria-labelledby="nav-vehicles-tab"></div>
+                <div class="tab-pane fade" id="nav-species" role="tabpanel" aria-labelledby="nav-species-tab"></div>
+                <div class="tab-pane fade" id="nav-planets" role="tabpanel" aria-labelledby="nav-planets-tab"></div>
+            </div>
+            <div class="pagination-bar">
+            </div>
         </div>
-    </nav>
-
-
-    <form class="form-inline my-2 my-lg-0 search-panel">
-        <input class="form-control mr-sm-2 search-panel__input search-panel__input--active" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0  search-button" type="submit">Search</button>
-    </form>
-
-
-    <div class="search-message"></div>
-    <div class="tab-content" id="nav-tabContent">
-
-        <div class="tab-pane fade show active" id="nav-people" role="tabpanel" aria-labelledby="nav-people-tab">
-        </div>
-        <div class="tab-pane fade" id="nav-films" role="tabpanel" aria-labelledby="nav-films-tab">
-        </div>
-        <div class="tab-pane fade" id="nav-starships" role="tabpanel" aria-labelledby="nav-starships-tab">
-        </div>
-        <div class="tab-pane fade" id="nav-vehicles" role="tabpanel" aria-labelledby="nav-vehicles-tab"></div>
-
-        <div class="tab-pane fade" id="nav-species" role="tabpanel" aria-labelledby="nav-species-tab"></div>
-        <div class="tab-pane fade" id="nav-planets" role="tabpanel" aria-labelledby="nav-planets-tab"></div>
-    </div>
-    <div class="pagination-bar">
 
     </div>
-
-</div>
-</div>
 </body>
 </html>

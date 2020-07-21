@@ -23,7 +23,7 @@
 }
 
 @media screen and (min-width: 1200px) {
-    .tab-content .active {
+    .tab-content--active .active {
         display: flex;
         flex-flow: row wrap;
         justify-content: flex-start;
@@ -35,13 +35,13 @@
 }
 
 @media screen and (max-width: 1199px) {
-    .tab-content .active {
+    .tab-content--active .active {
         display: flex;
         flex-flow: row wrap;
         justify-content: space-around;
         align-items: center;
         padding-top: 40px;
-        padding-left: 40px;
+       /* padding-left: 30px;*/
         padding-right: 40px;
     }
 }
@@ -52,7 +52,12 @@
     min-height: 320px;
 }
 
-.card:hover {
+.card__button {
+    box-shadow: none;
+    outline: none;
+}
+
+.card--active:hover {
     margin-left: 30px;
     box-shadow: 0 0 10px rgba(89, 128, 49, 0.5);
     transition: box-shadow .1s linear;
@@ -69,11 +74,6 @@
 .nav-tabs > .nav-link.active {
     color: rgba(0, 137, 0, 255);
     font-weight: bold;
-}
-
-.card__button {
-    box-shadow: none;
-    outline: none;
 }
 
 .btn-link:hover:focus,
@@ -120,12 +120,25 @@
 }
 
 .pagination-bar {
-    height: 60px;
+    min-height: 60px;
+    height: auto;
     padding-top: 30px;
-    padding-left: 60px;
+}
+
+.pagination {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.page-item{
+    margin-bottom: 10px;
 }
 
 .page-item.active .page-link {
+    box-shadow: 0 0 10px rgba(89, 128, 49, 0.5);
+    outline: none;
     background-color: rgba(0, 137, 0, 255);
     border-color: rgba(0, 137, 0, 255);
 }

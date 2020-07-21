@@ -7,12 +7,12 @@ window.onload = function () {
     document.querySelector("#nav-species-tab").addEventListener("click", getSpecies, false)
     document.querySelector("#nav-planets-tab").addEventListener("click", getPlanets, false)
 
-
     getPeople();
 
-
     function checkSiteLanguage() {
+
         let lang = null;
+
         if (checkLocalStorage("lang")) {
             let currentLang = JSON.parse(localStorage.getItem("lang"));
             setSiteLanguage(currentLang);
@@ -27,10 +27,10 @@ window.onload = function () {
 
     checkSiteLanguage();
 
-
     function setSiteLanguage(lang) {
 
         switch (lang) {
+
             case "eng":
                 document.querySelector(".language-notice").textContent = "Site language:";
                 document.querySelector("#nav-people-tab").textContent = "People";
@@ -54,12 +54,11 @@ window.onload = function () {
                 if (nextButtonEng) {
                     nextButtonEng.textContent = "Next";
                 }
-                ;
+
                 let previousButtonEng = document.querySelector(".previous-button");
                 if (previousButtonEng) {
                     previousButtonEng.textContent = "Previous";
                 }
-                ;
 
                 let backButtonEng = document.querySelector(".return-button");
                 if (backButtonEng) {
@@ -69,6 +68,7 @@ window.onload = function () {
                 if (noResultsMsgEng) {
                     noResultsMsgEng.textContent = "No search results";
                 }
+
                 break;
 
             case "ru":
@@ -93,27 +93,29 @@ window.onload = function () {
                 if (nextButtonRu) {
                     nextButtonRu.textContent = "Следующая";
                 }
-                ;
+
                 let previousButtonRu = document.querySelector(".previous-button");
                 if (previousButtonRu) {
                     previousButtonRu.textContent = "Предыдущая";
                 }
-                ;
+
                 let backButtonRu = document.querySelector(".return-button");
                 if (backButtonRu) {
                     backButtonRu.textContent = "< вернуться к полному списку";
                 }
+
                 let noResultsMsgRu = document.querySelector(".no-search-message");
                 if (noResultsMsgRu) {
                     noResultsMsgRu.textContent = "Ничего не найдено";
                 }
+
                 break;
         }
-
-
     }
 
+
     document.querySelector(".toggle").addEventListener("click", changeSiteLanguage, false);
+
 
     function changeSiteLanguage(e) {
 
@@ -126,13 +128,14 @@ window.onload = function () {
         } else {
             setSiteLanguage("ru");
             setToLocalStorage("lang", "ru");
-
         }
     }
 
 
     function addShowMoreButton() {
+
         checkSiteLanguage();
+
         let collapseButtons = document.querySelectorAll(".card__button");
 
         [].forEach.call(collapseButtons, function (button) {
@@ -163,9 +166,9 @@ window.onload = function () {
                              </div>`;
 
             currentTab.innerHTML = preloader;
-
         }
     };
+
 
     addPreloader();
 
@@ -174,11 +177,9 @@ window.onload = function () {
 
         if (response.count > 10) {
 
-
             let pageNumbers = Math.ceil(response.count / 10);
 
             let allPages = [];
-
 
             let activePage = response.next ? response.next.split("page=")[1] - 1 : +response.previous.split("page=")[1] + 1;
 
@@ -186,7 +187,6 @@ window.onload = function () {
                 let pageNumber = ` <li class="page-item  ${activePage === i ? "active" : ""}"><a class="page-link" href="${url + (i)}" data-tab="${tab}">${i}</a></li>`;
                 allPages.push(pageNumber);
             }
-
 
             let paginator = ` <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -203,7 +203,9 @@ window.onload = function () {
             [].forEach.call(pages, function (page) {
                 page.addEventListener("click", moveToAnotherPage, false);
             });
+
             checkSiteLanguage();
+
         } else {
             document.querySelector(".pagination").innerHTML = "";
         }
@@ -211,11 +213,12 @@ window.onload = function () {
 
 
     function moveToAnotherPage(e) {
+
         e.preventDefault();
+
         let _this = this;
         let nextPage = _this.getAttribute("href");
         let nextUrl = null;
-
         let isSearchPages = nextPage.split("search")[1];
 
         if (isSearchPages) {
@@ -241,6 +244,7 @@ window.onload = function () {
                     break;
 
                 case "films":
+
                     if (checkLocalStorage(nextPage)) {
 
                         let page = getFromLocalStorage(nextPage);
@@ -250,6 +254,7 @@ window.onload = function () {
                         fetchGetFilms(nextPage)
                     }
                     break;
+
                 case "starships":
 
                     if (checkLocalStorage(nextPage)) {
@@ -262,6 +267,7 @@ window.onload = function () {
                     break;
 
                 case "vehicles":
+
                     if (checkLocalStorage(nextPage)) {
                         let page = getFromLocalStorage(nextPage);
                         renderVehicles(page);
@@ -270,7 +276,9 @@ window.onload = function () {
                         fetchVehicles(nextPage)
                     }
                     break;
+
                 case "species":
+
                     if (checkLocalStorage(nextPage)) {
                         let page = getFromLocalStorage(nextPage);
                         renderSpecies(page);
@@ -279,7 +287,9 @@ window.onload = function () {
                         fetchSpecies(nextPage)
                     }
                     break;
+
                 case "planets":
+
                     if (checkLocalStorage(nextPage)) {
                         let page = getFromLocalStorage(nextPage);
                         renderPlanets(page);
@@ -288,13 +298,16 @@ window.onload = function () {
                         fetchPlanets(nextPage);
                     }
                     break;
+
             }
         }
     }
 
 
     function checkLocalStorage(tab) {
+
         let requestTab = localStorage.getItem(tab);
+
         if (requestTab) {
             return true;
         } else {
@@ -307,9 +320,7 @@ window.onload = function () {
     }
 
     function getFromLocalStorage(page) {
-
         let pageFromLocalStorage = JSON.parse(localStorage.getItem(page));
-
         return pageFromLocalStorage
     }
 
@@ -318,7 +329,8 @@ window.onload = function () {
 
         let warning = `<div class="alert alert-danger" role="alert">
                           ${message}
-                      </div>`
+                      </div>`;
+
         document.querySelector(tab).innerHTML = warning;
         document.querySelector(".pagination").innerHTML = "";
     }
@@ -326,7 +338,6 @@ window.onload = function () {
 
     function findActiveTab() {
         let activeTab = document.querySelector("div.tab-content  div.active");
-
         return activeTab.id;
     }
 
@@ -336,11 +347,11 @@ window.onload = function () {
 
     function searchByName(e) {
         e.preventDefault();
+
         let searchRequest = document.querySelector(".search-panel__input").value;
 
         if (searchRequest) {
             let currentActiveTab = findActiveTab();
-
             let resource = currentActiveTab.substr(4);
 
             fetchSearchRequest(searchRequest, resource);
@@ -351,17 +362,18 @@ window.onload = function () {
     function fetchSearchRequest(req, resource) {
 
         let searchUrl = `http://swapi.dev/api/${resource}/?search=`;
+
         fetch(searchUrl + req)
+
             .then(response => {
                 let answer = response.json();
                 return answer;
-
             })
+
             .then(answer => {
                 setToLocalStorage((searchUrl + req + "&page=1"), answer);
                 renderFirstSearchResults(answer, resource)
             })
-
     };
 
 
@@ -369,12 +381,15 @@ window.onload = function () {
 
         let currentActiveTab = findActiveTab();
         let url = null;
+
         if (result.next) {
             url = result.next.split("page=")[0] + "page=";
         }
 
         switch (currentActiveTab) {
+
             case "nav-people":
+
                 addPreloader("#nav-people");
                 if (result.count === 0) {
                     showNoneResults("#nav-people");
@@ -384,7 +399,9 @@ window.onload = function () {
                     addPaginator(result, tab, url);
                 }
                 break;
+
             case "nav-films":
+
                 addPreloader("#nav-films");
                 if (result.count === 0) {
                     showNoneResults("#nav-films");
@@ -395,6 +412,7 @@ window.onload = function () {
                 }
                 break;
             case "nav-starships":
+
                 addPreloader("#nav-starships");
                 if (result.count === 0) {
                     showNoneResults("#nav-starships");
@@ -404,7 +422,9 @@ window.onload = function () {
                     addPaginator(result, tab, url);
                 }
                 break;
+
             case "nav-vehicles":
+
                 addPreloader("#nav-vehicles");
                 if (result.count === 0) {
                     showNoneResults("#nav-vehicles");
@@ -414,7 +434,9 @@ window.onload = function () {
                     addPaginator(result, tab, url);
                 }
                 break;
+
             case "nav-species":
+
                 addPreloader("#nav-species");
                 if (result.count === 0) {
                     showNoneResults("#nav-species");
@@ -424,7 +446,9 @@ window.onload = function () {
                     addPaginator(result, tab, url);
                 }
                 break;
+
             case "nav-planets":
+
                 addPreloader("#nav-planets");
                 if (result.count === 0) {
                     showNoneResults("#nav-planets");
@@ -443,21 +467,15 @@ window.onload = function () {
         document.querySelector(".search-message").innerHTML =
             `<div>
                   <a href="#" class="return-button"> 
-                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left-square" fill="currentColor" 
-                          xmlns="http://www.w3.org/2000/svg">
-                           <path fill-rule="evenodd" 
-                           d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 
-                           2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                          <path fill-rule="evenodd" 
-                          d="M8.354 11.354a.5.5 0 0 0 0-.708L5.707 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z"/>
-                             <path fill-rule="evenodd" d="M11.5 8a.5.5 0 0 0-.5-.5H6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z"/>
-                  </svg>
                   return to full list</a>
                 ${success ? `<p class="search-results-header">Search results:<p/>` : ""}               
            </div>`;
+
         document.querySelector(".return-button").addEventListener("click", returnToFullList, false);
+
         checkSiteLanguage();
     }
+
 
     function deleteResultsHeaders() {
         document.querySelector(".search-message").innerHTML = "";
@@ -466,25 +484,33 @@ window.onload = function () {
 
     function returnToFullList(e) {
         e.preventDefault();
+
         deleteResultsHeaders();
+
         let activeTab = findActiveTab();
 
         switch (activeTab) {
+
             case "nav-people":
                 getPeople();
                 break;
+
             case "nav-films":
                 getFilms();
                 break;
+
             case "nav-starships":
                 getStarShips();
                 break;
+
             case "nav-vehicles":
                 getVehicles();
                 break;
+
             case "nav-species":
                 getSpecies();
                 break;
+
             case "nav-planets":
                 getPlanets();
                 break
@@ -494,13 +520,16 @@ window.onload = function () {
 
 
     function showNoneResults(tab) {
+
         let noResultMessage = `<div class="alert alert-success no-search-message" role="alert">
                                  No search results
                               </div>`;
 
         showResultsHeaders(false);
+
         document.querySelector(".pagination").innerHTML = "";
         document.querySelector(tab).innerHTML = noResultMessage;
+
         checkSiteLanguage();
     };
 
@@ -511,6 +540,7 @@ window.onload = function () {
 
 
     function getPeople() {
+
         clearSearchInput();
         deleteResultsHeaders();
         addPreloader("#nav-people");
@@ -522,7 +552,6 @@ window.onload = function () {
         } else {
             fetchGetPeople();
         }
-
     };
 
 
@@ -548,11 +577,10 @@ window.onload = function () {
                     setToLocalStorage(currentUrl, people);
                 }
             })
+
             .catch(error =>
                 onFetchError("#nav-people", error)
             )
-
-
     };
 
 
@@ -561,7 +589,7 @@ window.onload = function () {
         let renderPeople = people.results.map(function (item, i) {
 
             return (
-                `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                `<div class="card card--active bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
@@ -590,7 +618,6 @@ window.onload = function () {
                             </div>
                              
                          </div>`)
-
         });
 
         document.querySelector("#nav-people").innerHTML = renderPeople.join("");
@@ -599,6 +626,7 @@ window.onload = function () {
 
 
     function getFilms() {
+
         clearSearchInput();
         deleteResultsHeaders();
         addPreloader("#nav-films");
@@ -618,6 +646,7 @@ window.onload = function () {
         let currentUrl = url ? url : "http://swapi.dev/api/films";
 
         fetch(currentUrl)
+
             .then(response => {
                 if (response.ok) {
                     let result = response.json();
@@ -635,6 +664,7 @@ window.onload = function () {
                     setToLocalStorage(currentUrl, films);
                 }
             })
+
             .catch(error =>
                 onFetchError("#nav-films", error)
             )
@@ -645,7 +675,7 @@ window.onload = function () {
 
         let renderFilms = films.results.map(function (item, i) {
             return (
-                `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                `<div class="card card--active bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.title}</h5>
                             </div>
@@ -669,17 +699,18 @@ window.onload = function () {
                                 <a class=" btn btn-link card__button" data-toggle="collapse" 
                                 href="${"#" + item.title.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
-                            </div>
-                             
-                         </div>`)
+                            </div> 
+                 </div>`)
 
         });
+
         document.querySelector("#nav-films").innerHTML = renderFilms.join("");
         addShowMoreButton();
     }
 
 
     function getStarShips() {
+
         clearSearchInput();
         deleteResultsHeaders();
         addPreloader("#nav-starships");
@@ -691,7 +722,6 @@ window.onload = function () {
         } else {
             fetchStarShips();
         }
-
     }
 
 
@@ -700,6 +730,7 @@ window.onload = function () {
         let currentUrl = url ? url : "http://swapi.dev/api/starships/?page=1";
 
         fetch(currentUrl)
+
             .then(response => {
                 if (response.ok) {
                     let result = response.json();
@@ -717,6 +748,7 @@ window.onload = function () {
                     setToLocalStorage(currentUrl, starships);
                 }
             })
+
             .catch(error =>
                 onFetchError("#nav-starships", error)
             )
@@ -728,7 +760,7 @@ window.onload = function () {
         let renderStarships = starships.results.map(function (item, i) {
 
             return (
-                `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                `<div class="card  card--active bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
@@ -759,17 +791,18 @@ window.onload = function () {
                                 <a class=" btn btn-link card__button" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
-                            </div>
-                             
-                         </div>`)
+                            </div>        
+                 </div>`)
 
         });
+
         document.querySelector("#nav-starships").innerHTML = renderStarships.join("");
         addShowMoreButton();
     }
 
 
     function getVehicles() {
+
         clearSearchInput();
         deleteResultsHeaders();
         addPreloader("#nav-vehicles");
@@ -789,6 +822,7 @@ window.onload = function () {
         let currentUrl = url ? url : "http://swapi.dev/api/vehicles/?page=1";
 
         fetch(currentUrl)
+
             .then(response => {
                 if (response.ok) {
                     let result = response.json();
@@ -806,6 +840,7 @@ window.onload = function () {
                     setToLocalStorage(currentUrl, vehicles);
                 }
             })
+
             .catch(error =>
                 onFetchError("#nav-vehicles", error)
             )
@@ -813,10 +848,11 @@ window.onload = function () {
 
 
     function renderVehicles(vehicles) {
+
         let renderVehicles = vehicles.results.map(function (item, i) {
 
             return (
-                `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                `<div class="card card--active bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
@@ -844,17 +880,18 @@ window.onload = function () {
                                 <a class=" btn btn-link card__button" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
-                            </div>
-                             
-                         </div>`)
+                            </div>      
+                 </div>`)
 
         });
+
         document.querySelector("#nav-vehicles").innerHTML = renderVehicles.join("");
         addShowMoreButton();
     }
 
 
     function getSpecies() {
+
         clearSearchInput();
         deleteResultsHeaders();
         addPreloader("#nav-species");
@@ -874,6 +911,7 @@ window.onload = function () {
         let currentUrl = url ? url : "http://swapi.dev/api/species/?page=1";
 
         fetch(currentUrl)
+
             .then(response => {
                 if (response.ok) {
                     let result = response.json();
@@ -891,6 +929,7 @@ window.onload = function () {
                     setToLocalStorage(currentUrl, species);
                 }
             })
+
             .catch(error =>
                 onFetchError("#nav-species", error)
             )
@@ -898,11 +937,11 @@ window.onload = function () {
 
 
     function renderSpecies(species) {
+
         let renderSpecies = species.results.map(function (item, i) {
 
-
             return (
-                `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                `<div class="card card--active bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
@@ -930,17 +969,18 @@ window.onload = function () {
                                 <a class=" btn btn-link card__button" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
-                            </div>
-                             
-                         </div>`)
+                            </div>            
+                 </div>`)
 
         });
+
         document.querySelector("#nav-species").innerHTML = renderSpecies.join("");
         addShowMoreButton();
     }
 
 
     function getPlanets() {
+
         clearSearchInput();
         deleteResultsHeaders();
         addPreloader("#nav-planets");
@@ -977,17 +1017,19 @@ window.onload = function () {
                     setToLocalStorage(currentUrl, planets);
                 }
             })
+
             .catch(error =>
                 onFetchError("#nav-planets", error)
             )
     }
 
+
     function renderPlanets(planets) {
+
         let renderPlanets = planets.results.map(function (item, i) {
 
-
             return (
-                `<div class="card bg-light border-success mb-3" style="max-width: 18rem;">
+                `<div class="card card--active bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
                                  <h5 class="card-title"> ${item.name}</h5>
                             </div>
@@ -1015,15 +1057,14 @@ window.onload = function () {
                                 <a class=" btn btn-link card__button" data-toggle="collapse" 
                                 href="${"#" + item.name.split(" ").join("")}" role="button" aria-expanded="false" 
                                 aria-controls="collapseExample">More...</a>
-                            </div>
-                             
-                         </div>`)
+                            </div>         
+                 </div>`)
 
         });
+
         document.querySelector("#nav-planets").innerHTML = renderPlanets.join("");
         addShowMoreButton();
     }
-
 
 }
 
