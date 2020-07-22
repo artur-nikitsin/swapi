@@ -1062,6 +1062,7 @@ window.onload = function () {
 
         });
 
+
         document.querySelector("#nav-planets").innerHTML = renderPlanets.join("");
         addShowMoreButton();
     }
