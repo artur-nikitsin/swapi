@@ -216,10 +216,13 @@ window.onload = function () {
                     switch (i) {
 
                         case 1:
+
                             allPages.push(pageNumber);
+
                             break;
 
                         case activePage - 1:
+
                             if (i !== 1 && i !== 2) {
                                 allPages.push(pageSpace);
                                 allPages.push(pageNumber);
@@ -229,10 +232,13 @@ window.onload = function () {
                             break;
 
                         case activePage:
+
                             allPages.push(pageNumber);
+
                             break;
 
                         case activePage + 1:
+
                             if (i !== pageNumbers && i !== pageNumbers - 1) {
                                 allPages.push(pageNumber);
                                 allPages.push(pageSpace);
@@ -242,7 +248,9 @@ window.onload = function () {
                             break;
 
                         case pageNumbers:
+
                             allPages.push(pageNumber);
+
                             break;
                     }
 
