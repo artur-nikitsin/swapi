@@ -76,6 +76,7 @@ window.onload = function () {
                 if (resultsMsgEng) {
                     resultsMsgEng.textContent = "Search results:";
                 }
+
                 let noResultsMsgEng = document.querySelector(".no-search-message");
                 if (noResultsMsgEng) {
                     noResultsMsgEng.textContent = "No search results";
@@ -101,6 +102,7 @@ window.onload = function () {
                         button.textContent = "Подробнее";
                     });
                 }
+
                 let nextButtonRu = document.querySelector(".next-button");
                 if (nextButtonRu) {
                     nextButtonRu.textContent = "Следующая";
@@ -120,6 +122,7 @@ window.onload = function () {
                 if (resultsMsgRu) {
                     resultsMsgRu.textContent = "Результаты поиска:";
                 }
+
                 let noResultsMsgRu = document.querySelector(".no-search-message");
                 if (noResultsMsgRu) {
                     noResultsMsgRu.textContent = "Ничего не найдено";
@@ -137,6 +140,7 @@ window.onload = function () {
     function changeSiteLanguage(e) {
 
         e.preventDefault();
+
         let language = this.getAttribute("data-value");
 
         switch (language) {
@@ -204,7 +208,46 @@ window.onload = function () {
 
             for (let i = 1; i <= pageNumbers; i++) {
                 let pageNumber = ` <li class="page-item  ${activePage === i ? "active" : ""}"><a class="page-link" href="${url + (i)}" data-tab="${tab}">${i}</a></li>`;
-                allPages.push(pageNumber);
+                let pageSpace = ` <li class="page-item disabled"><a class="page-link" href="#">...</a></li>`;
+
+                if (pageNumbers > 5) {
+
+                    switch (i) {
+
+                        case 1:
+                            allPages.push(pageNumber);
+                            break;
+
+                        case activePage - 1:
+                            if (i !== 1 && i !== 2) {
+                                allPages.push(pageSpace);
+                                allPages.push(pageNumber);
+                            } else {
+                                allPages.push(pageNumber);
+                            }
+                            break;
+
+                        case activePage:
+                            allPages.push(pageNumber);
+                            break;
+
+                        case activePage + 1:
+                            if (i !== pageNumbers && i !== pageNumbers - 1) {
+                                allPages.push(pageNumber);
+                                allPages.push(pageSpace);
+                            } else {
+                                allPages.push(pageNumber);
+                            }
+                            break;
+
+                        case pageNumbers:
+                            allPages.push(pageNumber);
+                            break;
+                    }
+
+                } else {
+                    allPages.push(pageNumber);
+                }
             }
 
             let paginator = ` <nav aria-label="Page navigation example">

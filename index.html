@@ -5,8 +5,6 @@
     <title>Swapi</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
-          rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -18,7 +16,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
             crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <script src="script.js"></script>
 
 </head>
@@ -36,17 +33,13 @@
                     Site language:
                 </button>
                 <div class="dropdown-menu languages-list">
-                    <a class="dropdown-item russian-language languages-list__lang-item" href="#" data-value="ru">RU</a>
+                    <a class="dropdown-item russian-language languages-list__lang-item languages-list__lang-item--active"
+                       href="#" data-value="ru">RU</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item english-language languages-list__lang-item" href="#" data-value="eng">ENG</a>
+                    <a class="dropdown-item english-language languages-list__lang-item languages-list__lang-item--active"
+                       href="#" data-value="eng">ENG</a>
                 </div>
             </div>
-
-
-            <!-- <p class="language-notice">Site language:</p>
-             <input type="checkbox" class="toggle-button" data-size="sm" checked data-toggle="toggle" data-on="eng" data-off="ru"
-                    data-onstyle="light"
-                    data-offstyle="secondary">-->
         </div>
     </div>
 

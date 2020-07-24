@@ -4,17 +4,7 @@
     justify-content: space-between;
     align-items: center;
     padding-bottom: 20px;
-}
-
-.header__language-panel {
-    display: flex;
-    padding-left-left: 20px;
-    flex-flow: column wrap;
-    align-items: flex-start;
-}
-
-.dropdown-menu {
-    width: 20px;
+    padding-right: 40px;
 }
 
 .container {
@@ -45,7 +35,6 @@
         justify-content: space-around;
         align-items: center;
         padding-top: 40px;
-       /* padding-left: 30px;*/
         padding-right: 40px;
     }
 }
@@ -136,7 +125,7 @@
     align-items: flex-start;
 }
 
-.page-item{
+.page-item {
     margin-bottom: 10px;
 }
 
