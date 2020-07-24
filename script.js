@@ -29,10 +29,17 @@ window.onload = function () {
 
     function setSiteLanguage(lang) {
 
+        let languages = document.querySelectorAll(".languages-list__lang-item");
+
+        [].forEach.call(languages, function (item, i) {
+            item.classList.remove("active");
+        })
+
         switch (lang) {
 
             case "eng":
-                document.querySelector(".language-notice").textContent = "Site language:";
+                document.querySelector(".english-language").classList.add("active");
+                document.querySelector(".dropdown-toggle").textContent = "Site language:";
                 document.querySelector("#nav-people-tab").textContent = "People";
                 document.querySelector("#nav-films-tab").textContent = "Films";
                 document.querySelector("#nav-starships-tab").textContent = "Starships";
@@ -64,6 +71,11 @@ window.onload = function () {
                 if (backButtonEng) {
                     backButtonEng.textContent = "< return to full list";
                 }
+
+                let resultsMsgEng = document.querySelector(".search-results-header");
+                if (resultsMsgEng) {
+                    resultsMsgEng.textContent = "Search results:";
+                }
                 let noResultsMsgEng = document.querySelector(".no-search-message");
                 if (noResultsMsgEng) {
                     noResultsMsgEng.textContent = "No search results";
@@ -72,8 +84,8 @@ window.onload = function () {
                 break;
 
             case "ru":
-                document.querySelector(".toggle").classList.add("off");
-                document.querySelector(".language-notice").textContent = "Язык сайта:";
+                document.querySelector(".russian-language").classList.add("active");
+                document.querySelector(".dropdown-toggle").textContent = "Язык сайта:";
                 document.querySelector("#nav-people-tab").textContent = "Люди";
                 document.querySelector("#nav-films-tab").textContent = "Фильмы";
                 document.querySelector("#nav-starships-tab").textContent = "Звездолеты";
@@ -104,6 +116,10 @@ window.onload = function () {
                     backButtonRu.textContent = "< вернуться к полному списку";
                 }
 
+                let resultsMsgRu = document.querySelector(".search-results-header");
+                if (resultsMsgRu) {
+                    resultsMsgRu.textContent = "Результаты поиска:";
+                }
                 let noResultsMsgRu = document.querySelector(".no-search-message");
                 if (noResultsMsgRu) {
                     noResultsMsgRu.textContent = "Ничего не найдено";
@@ -114,20 +130,23 @@ window.onload = function () {
     }
 
 
-    document.querySelector(".toggle").addEventListener("click", changeSiteLanguage, false);
+    document.querySelector(".russian-language").addEventListener("click", changeSiteLanguage, false);
+    document.querySelector(".english-language").addEventListener("click", changeSiteLanguage, false);
 
 
     function changeSiteLanguage(e) {
 
-        let isEnglish = this.classList.contains("off");
+        e.preventDefault();
+        let language = this.getAttribute("data-value");
 
-        if (isEnglish) {
-            setSiteLanguage("eng");
-            setToLocalStorage("lang", "eng");
-
-        } else {
-            setSiteLanguage("ru");
-            setToLocalStorage("lang", "ru");
+        switch (language) {
+            case "ru":
+                setSiteLanguage("ru");
+                setToLocalStorage("lang", "ru");
+                break;
+            case "eng":
+                setSiteLanguage("eng");
+                setToLocalStorage("lang", "eng");
         }
     }
 

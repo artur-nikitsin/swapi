@@ -10,7 +10,11 @@
     display: flex;
     padding-left-left: 20px;
     flex-flow: column wrap;
-    align-items: flex-end;
+    align-items: flex-start;
+}
+
+.dropdown-menu {
+    width: 20px;
 }
 
 .container {
