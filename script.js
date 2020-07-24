@@ -22,6 +22,7 @@ window.onload = function () {
             setSiteLanguage("eng");
             lang = "eng";
         }
+
         return lang;
     }
 
@@ -31,7 +32,7 @@ window.onload = function () {
 
         let languages = document.querySelectorAll(".languages-list__lang-item");
 
-        [].forEach.call(languages, function (item, i) {
+        [].forEach.call(languages, function (item) {
             item.classList.remove("active");
         })
 
@@ -175,7 +176,7 @@ window.onload = function () {
                 currentButton.innerText = (checkSiteLanguage() === "eng") ? "More..." : "Подробнее";
             }
         }
-    };
+    }
 
 
     function addPreloader(currentTabId) {
@@ -190,7 +191,7 @@ window.onload = function () {
 
             currentTab.innerHTML = preloader;
         }
-    };
+    }
 
 
     addPreloader();
@@ -271,7 +272,7 @@ window.onload = function () {
         } else {
             document.querySelector(".pagination").innerHTML = "";
         }
-    };
+    }
 
 
     function moveToAnotherPage(e) {
@@ -436,7 +437,7 @@ window.onload = function () {
                 setToLocalStorage((searchUrl + req + "&page=1"), answer);
                 renderFirstSearchResults(answer, resource)
             })
-    };
+    }
 
 
     function renderFirstSearchResults(result, tab) {
@@ -593,7 +594,7 @@ window.onload = function () {
         document.querySelector(tab).innerHTML = noResultMessage;
 
         checkSiteLanguage();
-    };
+    }
 
 
     function clearSearchInput() {
@@ -614,7 +615,7 @@ window.onload = function () {
         } else {
             fetchGetPeople();
         }
-    };
+    }
 
 
     function fetchGetPeople(url) {
@@ -643,12 +644,12 @@ window.onload = function () {
             .catch(error =>
                 onFetchError("#nav-people", error)
             )
-    };
+    }
 
 
     function renderPeople(people) {
 
-        let renderPeople = people.results.map(function (item, i) {
+        let renderPeople = people.results.map(function (item) {
 
             return (
                 `<div class="card card--active bg-light border-success mb-3" style="max-width: 18rem;">
@@ -735,7 +736,7 @@ window.onload = function () {
 
     function renderFilms(films) {
 
-        let renderFilms = films.results.map(function (item, i) {
+        let renderFilms = films.results.map(function (item) {
             return (
                 `<div class="card card--active bg-light border-success mb-3" style="max-width: 18rem;">
                             <div class="card-header bg-transparent border-success">
@@ -819,7 +820,7 @@ window.onload = function () {
 
     function renderStarships(starships) {
 
-        let renderStarships = starships.results.map(function (item, i) {
+        let renderStarships = starships.results.map(function (item) {
 
             return (
                 `<div class="card  card--active bg-light border-success mb-3" style="max-width: 18rem;">
@@ -911,7 +912,7 @@ window.onload = function () {
 
     function renderVehicles(vehicles) {
 
-        let renderVehicles = vehicles.results.map(function (item, i) {
+        let renderVehicles = vehicles.results.map(function (item) {
 
             return (
                 `<div class="card card--active bg-light border-success mb-3" style="max-width: 18rem;">
@@ -1000,7 +1001,7 @@ window.onload = function () {
 
     function renderSpecies(species) {
 
-        let renderSpecies = species.results.map(function (item, i) {
+        let renderSpecies = species.results.map(function (item) {
 
             return (
                 `<div class="card card--active bg-light border-success mb-3" style="max-width: 18rem;">
@@ -1088,7 +1089,7 @@ window.onload = function () {
 
     function renderPlanets(planets) {
 
-        let renderPlanets = planets.results.map(function (item, i) {
+        let renderPlanets = planets.results.map(function (item) {
 
             return (
                 `<div class="card card--active bg-light border-success mb-3" style="max-width: 18rem;">
